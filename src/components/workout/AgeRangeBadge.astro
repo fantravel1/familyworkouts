@@ -1,0 +1,48 @@
+---
+interface Props {
+  ageGroups: string[];
+  showAll?: boolean;
+}
+
+const { ageGroups, showAll = false } = Astro.props;
+
+const ageIcons: Record<string, string> = {
+  toddlers: '👶',
+  preschool: '🧒',
+  kids: '👧',
+  teens: '🧑',
+  adults: '👨',
+  seniors: '👴',
+  all: '👨‍👩‍👧‍👦',
+};
+
+const ageLabels: Record<string, string> = {
+  toddlers: '1-3 years',
+  preschool: '3-5 years',
+  kids: '5-12 years',
+  teens: '13-17 years',
+  adults: '18-59 years',
+  seniors: '60+ years',
+  all: 'All Ages',
+};
+
+const displayAges = showAll ? ageGroups : ageGroups.slice(0, 3);
+const hasMore = !showAll && ageGroups.length > 3;
+---
+
+<div class="flex flex-wrap gap-1.5">
+  {displayAges.map((age) => (
+    <span
+      class="inline-flex items-center gap-1 text-xs bg-ocean/10 text-ocean px-2 py-1 rounded-full font-medium"
+      title={ageLabels[age] || age}
+    >
+      <span aria-hidden="true">{ageIcons[age] || '👤'}</span>
+      <span class="capitalize">{age}</span>
+    </span>
+  ))}
+  {hasMore && (
+    <span class="inline-flex items-center text-xs bg-gray-100 text-soft-gray px-2 py-1 rounded-full font-medium">
+      +{ageGroups.length - 3} more
+    </span>
+  )}
+</div>

@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Prevent crawling of utility pages
+Disallow: /api/
+Disallow: /_astro/
+
+# Sitemap location
+Sitemap: https://familyworkouts.com/sitemap-index.xml
+
+# Crawl-delay for politeness
+Crawl-delay: 1

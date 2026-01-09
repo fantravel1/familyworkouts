@@ -1,0 +1,247 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/global/Header.astro';
+import Footer from '../../../components/global/Footer.astro';
+import MobileNav from '../../../components/global/MobileNav.astro';
+import WorkoutVideo from '../../../components/workout/WorkoutVideo.astro';
+import WorkoutCard from '../../../components/workout/WorkoutCard.astro';
+import DifficultyBadge from '../../../components/workout/DifficultyBadge.astro';
+import AgeRangeBadge from '../../../components/workout/AgeRangeBadge.astro';
+import BreadcrumbSchema from '../../../components/seo/BreadcrumbSchema.astro';
+import VideoSchema from '../../../components/seo/VideoSchema.astro';
+
+import categories from '../../../data/categories.json';
+
+export function getStaticPaths() {
+  // In production, this would generate from content collections
+  const workouts = [
+    { category: 'dance', slug: 'family-dance-party', title: 'Family Dance Party', description: 'Get the whole family moving with this fun, energetic 15-minute dance workout. No experience needed!', duration: 15, difficulty: 'beginner', ageGroups: ['toddlers', 'preschool', 'kids', 'teens', 'adults', 'seniors'], youtubeId: 'dQw4w9WgXcQ' },
+    { category: 'yoga', slug: 'animal-yoga-adventure', title: 'Animal Yoga Adventure', description: 'Kids love becoming their favorite animals in this playful yoga session. Perfect for ages 3-10.', duration: 12, difficulty: 'beginner', ageGroups: ['preschool', 'kids'], youtubeId: 'dQw4w9WgXcQ' },
+    { category: 'cultural', slug: 'radio-taiso-morning', title: 'Radio Taiso Morning Routine', description: 'Japan\'s famous 3-minute morning exercise routine practiced by 27 million people!', duration: 3, difficulty: 'beginner', ageGroups: ['kids', 'teens', 'adults', 'seniors'], youtubeId: 'dQw4w9WgXcQ' },
+    { category: 'cultural', slug: 'tai-chi-families', title: 'Tai Chi for Families', description: 'Slow, meditative movements from China\'s ancient tradition. Perfect for all ages.', duration: 15, difficulty: 'beginner', ageGroups: ['kids', 'teens', 'adults', 'seniors'], youtubeId: 'dQw4w9WgXcQ' },
+    { category: 'dance', slug: 'bollywood-dance-fitness', title: 'Bollywood Dance Fitness', description: 'High-energy Bollywood dance moves the whole family will love!', duration: 20, difficulty: 'intermediate', ageGroups: ['kids', 'teens', 'adults'], youtubeId: 'dQw4w9WgXcQ' },
+    { category: 'cultural', slug: 'capoeira-basics', title: 'Capoeira Basics for Families', description: 'Learn the fundamentals of this Brazilian martial art and dance form.', duration: 25, difficulty: 'intermediate', ageGroups: ['kids', 'teens', 'adults'], youtubeId: 'dQw4w9WgXcQ' },
+  ];
+
+  return workouts.map(w => ({
+    params: { category: w.category, slug: w.slug },
+    props: { workout: w }
+  }));
+}
+
+const { workout } = Astro.props;
+const { category, slug } = Astro.params;
+
+const categoryData = categories.find(c => c.slug === category);
+
+const breadcrumbs = [
+  { name: "Home", href: "/" },
+  { name: "Workouts", href: "/workouts/" },
+  { name: categoryData?.name || category, href: `/workouts/${category}/` },
+  { name: workout.title, href: `/workouts/${category}/${slug}/` }
+];
+
+const relatedWorkouts = [
+  {
+    title: "Animal Yoga Adventure",
+    description: "Kids love becoming their favorite animals in this playful yoga session.",
+    slug: "animal-yoga-adventure",
+    category: "yoga",
+    duration: 12,
+    difficulty: "beginner" as const,
+    ageGroups: ["preschool", "kids"],
+    youtubeId: "dQw4w9WgXcQ"
+  },
+  {
+    title: "Radio Taiso Morning Routine",
+    description: "Japan's famous 3-minute morning exercise routine!",
+    slug: "radio-taiso-morning",
+    category: "cultural",
+    duration: 3,
+    difficulty: "beginner" as const,
+    ageGroups: ["kids", "teens", "adults", "seniors"],
+    youtubeId: "dQw4w9WgXcQ"
+  },
+  {
+    title: "10-Minute Family HIIT",
+    description: "Quick but effective! High-energy intervals for the whole family.",
+    slug: "10-minute-family-hiit",
+    category: "hiit",
+    duration: 10,
+    difficulty: "intermediate" as const,
+    ageGroups: ["kids", "teens", "adults"],
+    youtubeId: "dQw4w9WgXcQ"
+  }
+];
+
+const thumbnailUrl = `https://i.ytimg.com/vi/${workout.youtubeId}/maxresdefault.jpg`;
+const pageTitle = `${workout.title} | ${workout.duration} Min Family ${categoryData?.name || category} Workout | Free Video`;
+const pageDescription = workout.description;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  image={thumbnailUrl}
+  type="article"
+>
+  <VideoSchema
+    slot="head"
+    title={workout.title}
+    description={workout.description}
+    thumbnailUrl={thumbnailUrl}
+    youtubeId={workout.youtubeId}
+    duration={workout.duration}
+    uploadDate="2025-01-01"
+    category={categoryData?.name}
+  />
+
+  <Header slot="header" currentPath="/workouts/" />
+
+  <article class="pb-12 lg:pb-16">
+    <div class="section-container">
+      <BreadcrumbSchema items={breadcrumbs} />
+    </div>
+
+    <!-- Video Section -->
+    <section class="bg-gray-900 py-4">
+      <div class="max-w-5xl mx-auto px-4">
+        <WorkoutVideo
+          youtubeId={workout.youtubeId}
+          title={workout.title}
+        />
+      </div>
+    </section>
+
+    <!-- Workout Info -->
+    <section class="py-8 lg:py-12">
+      <div class="section-container">
+        <div class="max-w-4xl">
+          <!-- Title and Meta -->
+          <div class="mb-8">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="text-3xl">{categoryData?.icon}</span>
+              <span class="text-soft-gray capitalize">{category}</span>
+              <span class="text-soft-gray">•</span>
+              <DifficultyBadge difficulty={workout.difficulty} />
+            </div>
+
+            <h1 class="text-3xl lg:text-4xl font-bold text-navy mb-4">
+              {workout.title}
+            </h1>
+
+            <p class="text-lg text-soft-gray mb-6">
+              {workout.description}
+            </p>
+
+            <!-- Quick Stats -->
+            <div class="flex flex-wrap gap-4 mb-6">
+              <div class="flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-lg">
+                <svg class="w-5 h-5 text-coral" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span class="font-semibold">{workout.duration} minutes</span>
+              </div>
+              <div class="flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-lg">
+                <svg class="w-5 h-5 text-forest" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+                <span class="font-semibold">No equipment needed</span>
+              </div>
+            </div>
+
+            <!-- Age Groups -->
+            <div class="mb-8">
+              <h2 class="font-semibold text-navy mb-3">Perfect for:</h2>
+              <AgeRangeBadge ageGroups={workout.ageGroups} showAll={true} />
+            </div>
+
+            <!-- CTA Buttons -->
+            <div class="flex flex-wrap gap-4">
+              <button class="btn-primary">
+                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+                Start Workout
+              </button>
+              <button class="btn-secondary">
+                <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                </svg>
+                Share
+              </button>
+            </div>
+          </div>
+
+          <!-- Workout Content -->
+          <div class="prose prose-lg max-w-none">
+            <h2>About This Workout</h2>
+            <p>
+              This {workout.duration}-minute {category} workout is designed for families to enjoy together.
+              Whether you have toddlers, teens, or grandparents participating, everyone can join in at their own level.
+            </p>
+
+            <h2>What You'll Do</h2>
+            <ul>
+              <li>Warm-up movements (2-3 minutes)</li>
+              <li>Main workout sequence ({workout.duration - 4} minutes)</li>
+              <li>Cool-down stretches (2 minutes)</li>
+            </ul>
+
+            <h2>Modifications</h2>
+            <p>
+              <strong>For younger children:</strong> Focus on fun and movement rather than perfect form. Let them dance freely!
+            </p>
+            <p>
+              <strong>For seniors:</strong> Seated modifications are shown throughout. Go at your own pace.
+            </p>
+            <p>
+              <strong>For limited mobility:</strong> Upper body movements can be done while seated.
+            </p>
+
+            <h2>Tips for Success</h2>
+            <ol>
+              <li>Clear some space in your living room or backyard</li>
+              <li>Let everyone participate at their own level</li>
+              <li>Take water breaks as needed</li>
+              <li>Most importantly - have fun together!</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Related Workouts -->
+    <section class="py-12 lg:py-16 bg-cloud">
+      <div class="section-container">
+        <h2 class="text-2xl font-bold text-navy mb-8">Similar Workouts</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {relatedWorkouts.map((w) => (
+            <WorkoutCard {...w} />
+          ))}
+        </div>
+      </div>
+    </section>
+  </article>
+
+  <Footer slot="footer" />
+  <MobileNav slot="mobile-nav" currentPath="/workouts/" />
+</BaseLayout>
+
+<style>
+  .prose h2 {
+    @apply text-xl font-bold text-navy mt-8 mb-4;
+  }
+  .prose p {
+    @apply text-soft-gray mb-4;
+  }
+  .prose ul, .prose ol {
+    @apply text-soft-gray mb-4 pl-6;
+  }
+  .prose li {
+    @apply mb-2;
+  }
+  .prose strong {
+    @apply text-navy;
+  }
+</style>

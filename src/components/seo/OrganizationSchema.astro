@@ -1,0 +1,49 @@
+---
+import SchemaMarkup from './SchemaMarkup.astro';
+
+const organizationData = {
+  "name": "FamilyWorkouts",
+  "alternateName": "Family Workouts",
+  "url": "https://familyworkouts.com",
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://familyworkouts.com/images/logo.png",
+    "width": 512,
+    "height": 512
+  },
+  "image": "https://familyworkouts.com/images/og-default.jpg",
+  "description": "The world's free family fitness platform. Exercise together — toddlers to grandparents. No equipment needed, mobile-first, multilingual.",
+  "foundingDate": "2025",
+  "sameAs": [
+    "https://youtube.com/@familyworkouts",
+    "https://instagram.com/familyworkouts",
+    "https://tiktok.com/@familyworkouts",
+    "https://facebook.com/familyworkouts",
+    "https://twitter.com/familyworkouts"
+  ],
+  "contactPoint": [
+    {
+      "@type": "ContactPoint",
+      "contactType": "customer support",
+      "url": "https://familyworkouts.com/contact/",
+      "availableLanguage": ["English", "Spanish", "Portuguese", "Hindi", "Arabic", "Chinese", "French"]
+    }
+  ],
+  "areaServed": {
+    "@type": "Place",
+    "name": "Worldwide"
+  },
+  "knowsAbout": [
+    "Family Fitness",
+    "Children's Exercise",
+    "Family Workouts",
+    "Home Workouts",
+    "Yoga for Kids",
+    "Dance Workouts",
+    "HIIT for Families"
+  ],
+  "slogan": "Free family fitness for all ages"
+};
+---
+
+<SchemaMarkup type="Organization" data={organizationData} />

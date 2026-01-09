@@ -1,0 +1,92 @@
+[
+  {
+    "name": "Toddlers",
+    "slug": "toddlers",
+    "ageRange": "1-3 years",
+    "description": "Playful activities for your littlest movers. Short, fun, and engaging!",
+    "icon": "👶",
+    "color": "sunshine",
+    "activityTarget": "3+ hours of movement throughout the day",
+    "tips": [
+      "Keep sessions under 10-15 minutes",
+      "Focus on free play and exploration",
+      "Use music and songs for engagement",
+      "Include plenty of rest breaks"
+    ]
+  },
+  {
+    "name": "Preschool",
+    "slug": "preschool",
+    "ageRange": "3-5 years",
+    "description": "Imaginative movement activities with animal walks, story-based yoga, and games.",
+    "icon": "🧒",
+    "color": "coral",
+    "activityTarget": "3+ hours of active play daily",
+    "tips": [
+      "Use storytelling and characters",
+      "Animal movements are perfect",
+      "15-20 minute focused activities",
+      "Lots of positive encouragement"
+    ]
+  },
+  {
+    "name": "Kids",
+    "slug": "kids",
+    "ageRange": "5-12 years",
+    "description": "Active workouts with sports drills, dance challenges, and team games.",
+    "icon": "👧",
+    "color": "ocean",
+    "activityTarget": "60 minutes moderate-to-vigorous activity daily",
+    "tips": [
+      "Introduce friendly competition",
+      "Include skill-building activities",
+      "20-30 minute focused workouts",
+      "Mix variety to maintain interest"
+    ]
+  },
+  {
+    "name": "Teens",
+    "slug": "teens",
+    "ageRange": "13-17 years",
+    "description": "Engaging workouts teens actually want to do. Strength, cardio, and sport-specific training.",
+    "icon": "🧑",
+    "color": "purple",
+    "activityTarget": "60 minutes moderate-to-vigorous activity daily",
+    "tips": [
+      "Let teens lead warm-ups",
+      "Respect their pace and preferences",
+      "Include strength training basics",
+      "Make it social and fun"
+    ]
+  },
+  {
+    "name": "Adults",
+    "slug": "adults",
+    "ageRange": "18-59 years",
+    "description": "Effective workouts you can do with your family. Lead by example!",
+    "icon": "👨",
+    "color": "forest",
+    "activityTarget": "150 minutes moderate activity per week",
+    "tips": [
+      "Model healthy exercise habits",
+      "Exercise with your kids, not just for them",
+      "Use hybrid training approaches",
+      "Make family fitness a priority"
+    ]
+  },
+  {
+    "name": "Seniors",
+    "slug": "seniors",
+    "ageRange": "60+ years",
+    "description": "Gentle, effective workouts for grandparents. Chair options and low-impact exercises.",
+    "icon": "👴",
+    "color": "ocean",
+    "activityTarget": "150 minutes moderate activity per week",
+    "tips": [
+      "Always offer seated modifications",
+      "Focus on balance and flexibility",
+      "Low-impact cardio is excellent",
+      "Include social connection"
+    ]
+  }
+]

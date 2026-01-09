@@ -1,0 +1,103 @@
+---
+interface Props {
+  type: 'Organization' | 'WebSite' | 'WebPage' | 'VideoObject' | 'HowTo' | 'FAQPage' | 'BreadcrumbList' | 'Article';
+  data: Record<string, any>;
+}
+
+const { type, data } = Astro.props;
+
+const baseOrganization = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "FamilyWorkouts",
+  "url": "https://familyworkouts.com",
+  "logo": "https://familyworkouts.com/images/logo.png",
+  "description": "Free family fitness platform with workout videos for all ages",
+  "sameAs": [
+    "https://youtube.com/@familyworkouts",
+    "https://instagram.com/familyworkouts",
+    "https://tiktok.com/@familyworkouts",
+    "https://facebook.com/familyworkouts"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "url": "https://familyworkouts.com/contact/"
+  }
+};
+
+const baseWebsite = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "FamilyWorkouts",
+  "url": "https://familyworkouts.com",
+  "description": "Free family workout videos for all ages",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://familyworkouts.com/search?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+};
+
+let schema: Record<string, any>;
+
+switch (type) {
+  case 'Organization':
+    schema = { ...baseOrganization, ...data };
+    break;
+  case 'WebSite':
+    schema = { ...baseWebsite, ...data };
+    break;
+  case 'WebPage':
+    schema = {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      ...data
+    };
+    break;
+  case 'VideoObject':
+    schema = {
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      ...data
+    };
+    break;
+  case 'HowTo':
+    schema = {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      ...data
+    };
+    break;
+  case 'FAQPage':
+    schema = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      ...data
+    };
+    break;
+  case 'BreadcrumbList':
+    schema = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      ...data
+    };
+    break;
+  case 'Article':
+    schema = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      ...data
+    };
+    break;
+  default:
+    schema = { "@context": "https://schema.org", ...data };
+}
+
+const jsonLd = JSON.stringify(schema);
+---
+
+<script type="application/ld+json" set:html={jsonLd}></script>

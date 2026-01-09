@@ -1,0 +1,66 @@
+[
+  {
+    "name": "Dance",
+    "slug": "dance",
+    "description": "Fun dance workouts for the whole family. Get moving with music from around the world!",
+    "icon": "💃",
+    "color": "coral",
+    "workoutCount": 45
+  },
+  {
+    "name": "Yoga",
+    "slug": "yoga",
+    "description": "Calming yoga sessions perfect for all ages, from toddler poses to senior stretches.",
+    "icon": "🧘",
+    "color": "ocean",
+    "workoutCount": 38
+  },
+  {
+    "name": "HIIT",
+    "slug": "hiit",
+    "description": "High-intensity interval training adapted for families. Short bursts, big results!",
+    "icon": "🔥",
+    "color": "coral",
+    "workoutCount": 32
+  },
+  {
+    "name": "Strength",
+    "slug": "strength",
+    "description": "Build strength together with bodyweight exercises suitable for every age group.",
+    "icon": "💪",
+    "color": "forest",
+    "workoutCount": 28
+  },
+  {
+    "name": "Sports",
+    "slug": "sports",
+    "description": "Practice sports skills together - from soccer drills to basketball fundamentals.",
+    "icon": "⚽",
+    "color": "sunshine",
+    "workoutCount": 35
+  },
+  {
+    "name": "Outdoor",
+    "slug": "outdoor",
+    "description": "Take fitness outside! Nature walks, backyard games, and park workouts.",
+    "icon": "🌳",
+    "color": "forest",
+    "workoutCount": 25
+  },
+  {
+    "name": "Cultural",
+    "slug": "cultural",
+    "description": "Traditional games and exercises from cultures around the world.",
+    "icon": "🌍",
+    "color": "purple",
+    "workoutCount": 42
+  },
+  {
+    "name": "Adaptive",
+    "slug": "adaptive",
+    "description": "Inclusive workouts designed for families with different abilities.",
+    "icon": "♿",
+    "color": "ocean",
+    "workoutCount": 20
+  }
+]

@@ -1,0 +1,89 @@
+{
+  "site": {
+    "name": "FamilyWorkouts",
+    "tagline": "Free Family Fitness for All Ages"
+  },
+  "nav": {
+    "home": "Home",
+    "workouts": "Workouts",
+    "ages": "By Age",
+    "challenges": "Challenges",
+    "guides": "Guides",
+    "about": "About",
+    "contact": "Contact",
+    "search": "Search"
+  },
+  "home": {
+    "hero_title": "Free Family Workouts",
+    "hero_subtitle": "Exercise together — toddlers to grandparents",
+    "hero_description": "The world's free family fitness platform. No equipment needed, no subscription required. Just you and your family, moving together.",
+    "cta_start": "Start Your First Workout",
+    "cta_browse": "Browse All Workouts",
+    "featured_title": "Featured Workouts",
+    "featured_description": "Hand-picked workouts perfect for the whole family",
+    "categories_title": "Explore by Category",
+    "categories_description": "Find the perfect workout style for your family",
+    "ages_title": "Workouts by Age",
+    "ages_description": "Activities designed for every stage of life",
+    "why_title": "Why Family Workouts?",
+    "stats_families": "Families Active",
+    "stats_workouts": "Free Workouts",
+    "stats_languages": "Languages",
+    "stats_countries": "Countries"
+  },
+  "workout": {
+    "duration": "Duration",
+    "difficulty": "Difficulty",
+    "ages": "Ages",
+    "equipment": "Equipment",
+    "none_needed": "No equipment needed",
+    "start_workout": "Start Workout",
+    "watch_video": "Watch Video",
+    "similar_workouts": "Similar Workouts",
+    "modifications": "Modifications",
+    "tips": "Tips for Success",
+    "share": "Share This Workout"
+  },
+  "difficulty": {
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "advanced": "Advanced"
+  },
+  "ages": {
+    "all": "All Ages",
+    "toddlers": "Toddlers (1-3)",
+    "preschool": "Preschool (3-5)",
+    "kids": "Kids (5-12)",
+    "teens": "Teens (13-17)",
+    "adults": "Adults",
+    "seniors": "Seniors (60+)"
+  },
+  "categories": {
+    "dance": "Dance",
+    "yoga": "Yoga",
+    "hiit": "HIIT",
+    "strength": "Strength",
+    "sports": "Sports",
+    "outdoor": "Outdoor",
+    "cultural": "Cultural",
+    "adaptive": "Adaptive"
+  },
+  "gamification": {
+    "streak": "Day Streak",
+    "workouts_completed": "Workouts Completed",
+    "badges_earned": "Badges Earned",
+    "keep_going": "Keep going!",
+    "congratulations": "Congratulations!"
+  },
+  "cta": {
+    "get_started": "Get Started",
+    "learn_more": "Learn More",
+    "view_all": "View All",
+    "try_now": "Try Now"
+  },
+  "footer": {
+    "tagline": "Free fitness for all families",
+    "copyright": "© {year} FamilyWorkouts.com. Free fitness for all families.",
+    "made_with": "Made with love for families everywhere"
+  }
+}

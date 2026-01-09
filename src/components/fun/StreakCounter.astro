@@ -1,0 +1,120 @@
+---
+interface Props {
+  initialStreak?: number;
+}
+
+const { initialStreak = 0 } = Astro.props;
+---
+
+<div class="streak-counter inline-flex items-center gap-2 bg-gradient-sunrise px-4 py-2 rounded-full" data-streak-counter>
+  <span class="text-2xl" aria-hidden="true">🔥</span>
+  <div>
+    <span class="font-bold text-navy" data-streak-value>{initialStreak}</span>
+    <span class="text-navy/70 text-sm ml-1">day streak</span>
+  </div>
+</div>
+
+<script>
+  // Streak tracking with localStorage
+  interface StreakData {
+    currentStreak: number;
+    longestStreak: number;
+    lastWorkoutDate: string | null;
+    totalWorkouts: number;
+  }
+
+  const STREAK_KEY = 'familyworkouts_streak';
+
+  function getStreakData(): StreakData {
+    const stored = localStorage.getItem(STREAK_KEY);
+    if (stored) {
+      return JSON.parse(stored);
+    }
+    return {
+      currentStreak: 0,
+      longestStreak: 0,
+      lastWorkoutDate: null,
+      totalWorkouts: 0
+    };
+  }
+
+  function saveStreakData(data: StreakData): void {
+    localStorage.setItem(STREAK_KEY, JSON.stringify(data));
+  }
+
+  function isSameDay(date1: Date, date2: Date): boolean {
+    return date1.toDateString() === date2.toDateString();
+  }
+
+  function isYesterday(date: Date): boolean {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    return isSameDay(date, yesterday);
+  }
+
+  function updateStreakDisplay(): void {
+    const data = getStreakData();
+    const today = new Date();
+
+    // Check if streak is broken
+    if (data.lastWorkoutDate) {
+      const lastDate = new Date(data.lastWorkoutDate);
+      if (!isSameDay(lastDate, today) && !isYesterday(lastDate)) {
+        // Streak broken - reset
+        data.currentStreak = 0;
+        saveStreakData(data);
+      }
+    }
+
+    // Update display
+    document.querySelectorAll('[data-streak-value]').forEach(el => {
+      el.textContent = String(data.currentStreak);
+    });
+  }
+
+  // Initialize on page load
+  document.addEventListener('DOMContentLoaded', updateStreakDisplay);
+
+  // Expose function to record workout completion
+  (window as any).recordWorkoutComplete = function(): void {
+    const data = getStreakData();
+    const today = new Date();
+
+    // Don't count multiple workouts on same day for streak
+    if (data.lastWorkoutDate) {
+      const lastDate = new Date(data.lastWorkoutDate);
+      if (isSameDay(lastDate, today)) {
+        data.totalWorkouts++;
+        saveStreakData(data);
+        return;
+      }
+
+      // Check if continuing streak
+      if (isYesterday(lastDate)) {
+        data.currentStreak++;
+      } else {
+        data.currentStreak = 1;
+      }
+    } else {
+      data.currentStreak = 1;
+    }
+
+    // Update longest streak
+    if (data.currentStreak > data.longestStreak) {
+      data.longestStreak = data.currentStreak;
+    }
+
+    data.lastWorkoutDate = today.toISOString();
+    data.totalWorkouts++;
+    saveStreakData(data);
+    updateStreakDisplay();
+
+    // Trigger celebration for milestones
+    if ([7, 14, 30, 60, 90, 365].includes(data.currentStreak)) {
+      const event = new CustomEvent('streak-milestone', {
+        detail: { streak: data.currentStreak }
+      });
+      document.dispatchEvent(event);
+    }
+  };
+</script>
