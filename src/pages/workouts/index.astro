@@ -1,0 +1,205 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/global/Header.astro';
+import Footer from '../../components/global/Footer.astro';
+import MobileNav from '../../components/global/MobileNav.astro';
+import WorkoutCard from '../../components/workout/WorkoutCard.astro';
+import CategoryCard from '../../components/workout/CategoryCard.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+
+import categories from '../../data/categories.json';
+
+// Sample workouts data
+const allWorkouts = [
+  {
+    title: "Family Dance Party",
+    description: "Get the whole family moving with this fun, energetic 15-minute dance workout!",
+    slug: "family-dance-party",
+    category: "dance",
+    duration: 15,
+    difficulty: "beginner" as const,
+    ageGroups: ["toddlers", "preschool", "kids", "teens", "adults", "seniors"],
+    youtubeId: "dQw4w9WgXcQ",
+    featured: true
+  },
+  {
+    title: "Animal Yoga Adventure",
+    description: "Kids love becoming their favorite animals in this playful yoga session.",
+    slug: "animal-yoga-adventure",
+    category: "yoga",
+    duration: 12,
+    difficulty: "beginner" as const,
+    ageGroups: ["preschool", "kids"],
+    youtubeId: "dQw4w9WgXcQ"
+  },
+  {
+    title: "10-Minute Family HIIT",
+    description: "Quick but effective! High-energy intervals for the whole family.",
+    slug: "10-minute-family-hiit",
+    category: "hiit",
+    duration: 10,
+    difficulty: "intermediate" as const,
+    ageGroups: ["kids", "teens", "adults"],
+    youtubeId: "dQw4w9WgXcQ"
+  },
+  {
+    title: "Radio Taiso Morning Routine",
+    description: "Japan's famous 3-minute morning exercise routine practiced by millions!",
+    slug: "radio-taiso-morning",
+    category: "cultural",
+    duration: 3,
+    difficulty: "beginner" as const,
+    ageGroups: ["kids", "teens", "adults", "seniors"],
+    youtubeId: "dQw4w9WgXcQ"
+  },
+  {
+    title: "Bollywood Dance Fitness",
+    description: "High-energy Bollywood dance moves the whole family will love!",
+    slug: "bollywood-dance-fitness",
+    category: "dance",
+    duration: 20,
+    difficulty: "intermediate" as const,
+    ageGroups: ["kids", "teens", "adults"],
+    youtubeId: "dQw4w9WgXcQ"
+  },
+  {
+    title: "Chair Yoga for Seniors",
+    description: "Gentle seated yoga perfect for grandparents and anyone who prefers low-impact.",
+    slug: "chair-yoga-seniors",
+    category: "yoga",
+    duration: 15,
+    difficulty: "beginner" as const,
+    ageGroups: ["adults", "seniors"],
+    youtubeId: "dQw4w9WgXcQ"
+  },
+  {
+    title: "Capoeira Basics for Families",
+    description: "Learn the fundamentals of this Brazilian martial art and dance form.",
+    slug: "capoeira-basics",
+    category: "cultural",
+    duration: 25,
+    difficulty: "intermediate" as const,
+    ageGroups: ["kids", "teens", "adults"],
+    youtubeId: "dQw4w9WgXcQ"
+  },
+  {
+    title: "Backyard Sports Challenge",
+    description: "Soccer, basketball, and more! Turn your backyard into a family fitness zone.",
+    slug: "backyard-sports-challenge",
+    category: "sports",
+    duration: 20,
+    difficulty: "beginner" as const,
+    ageGroups: ["kids", "teens", "adults"],
+    youtubeId: "dQw4w9WgXcQ"
+  },
+  {
+    title: "Tai Chi for Families",
+    description: "Slow, meditative movements perfect for all ages and abilities.",
+    slug: "tai-chi-families",
+    category: "cultural",
+    duration: 15,
+    difficulty: "beginner" as const,
+    ageGroups: ["kids", "teens", "adults", "seniors"],
+    youtubeId: "dQw4w9WgXcQ"
+  }
+];
+
+const breadcrumbs = [
+  { name: "Home", href: "/" },
+  { name: "Workouts", href: "/workouts/" }
+];
+
+const pageTitle = "Free Family Workouts | Dance, Yoga, HIIT & More | FamilyWorkouts";
+const pageDescription = "Browse 500+ free family workout videos. Dance parties, yoga, HIIT, sports drills, and cultural exercises for all ages. No equipment needed!";
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+>
+  <Header slot="header" currentPath="/workouts/" />
+
+  <div class="section-container">
+    <BreadcrumbSchema items={breadcrumbs} />
+  </div>
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-br from-coral/10 via-sunshine/5 to-ocean/10 py-12 lg:py-16">
+    <div class="section-container">
+      <div class="max-w-3xl">
+        <h1 class="text-3xl lg:text-4xl font-bold text-navy mb-4">
+          All Family Workouts
+        </h1>
+        <p class="text-lg text-soft-gray mb-6">
+          500+ free workout videos for the whole family. Filter by category, age group, or difficulty to find the perfect workout.
+        </p>
+
+        <!-- Quick Filters -->
+        <div class="flex flex-wrap gap-2">
+          <button class="px-4 py-2 bg-coral text-white rounded-full text-sm font-medium">
+            All Workouts
+          </button>
+          <button class="px-4 py-2 bg-white text-navy rounded-full text-sm font-medium hover:bg-gray-100 transition-colors">
+            Beginner
+          </button>
+          <button class="px-4 py-2 bg-white text-navy rounded-full text-sm font-medium hover:bg-gray-100 transition-colors">
+            Under 15 min
+          </button>
+          <button class="px-4 py-2 bg-white text-navy rounded-full text-sm font-medium hover:bg-gray-100 transition-colors">
+            No Equipment
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Quick Access -->
+  <section class="py-8 bg-white border-b border-gray-100">
+    <div class="section-container">
+      <div class="flex gap-4 overflow-x-auto pb-2 hide-scrollbar">
+        {categories.map((cat) => (
+          <a
+            href={`/workouts/${cat.slug}/`}
+            class="flex items-center gap-2 px-4 py-2 bg-gray-50 rounded-full text-sm font-medium text-navy hover:bg-gray-100 transition-colors whitespace-nowrap"
+          >
+            <span>{cat.icon}</span>
+            <span>{cat.name}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Workouts Grid -->
+  <section class="py-12 lg:py-16">
+    <div class="section-container">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {allWorkouts.map((workout) => (
+          <WorkoutCard {...workout} />
+        ))}
+      </div>
+
+      <!-- Load More -->
+      <div class="text-center mt-12">
+        <button class="btn-secondary">
+          Load More Workouts
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="py-12 lg:py-16 bg-cloud">
+    <div class="section-container">
+      <h2 class="text-2xl font-bold text-navy mb-8">Browse by Category</h2>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {categories.map((category) => (
+          <CategoryCard {...category} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+  <MobileNav slot="mobile-nav" currentPath="/workouts/" />
+</BaseLayout>

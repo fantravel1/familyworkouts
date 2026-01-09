@@ -1,0 +1,184 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/global/Header.astro';
+import Footer from '../../components/global/Footer.astro';
+import MobileNav from '../../components/global/MobileNav.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+
+const breadcrumbs = [
+  { name: "Home", href: "/" },
+  { name: "Challenges", href: "/challenges/" }
+];
+
+const challenges = [
+  {
+    title: "7-Day Family Fitness Kickstart",
+    description: "Get your family moving with this beginner-friendly week of workouts. Perfect for families just starting out!",
+    slug: "7-day-kickstart",
+    duration: 7,
+    difficulty: "beginner",
+    icon: "🚀",
+    badge: "Most Popular"
+  },
+  {
+    title: "30-Day Dance Challenge",
+    description: "Learn dance moves from around the world! One new style every day for a month.",
+    slug: "30-day-dance",
+    duration: 30,
+    difficulty: "intermediate",
+    icon: "💃",
+    badge: null
+  },
+  {
+    title: "World Culture Movement Tour",
+    description: "Explore traditional exercises from every continent. Japan's Radio Taiso, Brazil's Capoeira, and more!",
+    slug: "world-culture-tour",
+    duration: 14,
+    difficulty: "beginner",
+    icon: "🌍",
+    badge: "New"
+  },
+  {
+    title: "Summer Shape-Up Challenge",
+    description: "30 days of progressive family workouts to get everyone feeling great this summer.",
+    slug: "summer-shape-up",
+    duration: 30,
+    difficulty: "intermediate",
+    icon: "☀️",
+    badge: "Seasonal"
+  },
+  {
+    title: "No-Screen Week Challenge",
+    description: "Replace screen time with active play! A week of fun alternatives to devices.",
+    slug: "no-screen-week",
+    duration: 7,
+    difficulty: "beginner",
+    icon: "📵",
+    badge: null
+  },
+  {
+    title: "Family Yoga Journey",
+    description: "A 21-day introduction to family yoga. Learn poses, breathing, and mindfulness together.",
+    slug: "family-yoga-journey",
+    duration: 21,
+    difficulty: "beginner",
+    icon: "🧘",
+    badge: null
+  }
+];
+
+const difficultyColors: Record<string, string> = {
+  beginner: "bg-forest/20 text-forest",
+  intermediate: "bg-sunshine/30 text-amber-700",
+  advanced: "bg-coral/20 text-coral"
+};
+
+const pageTitle = "Family Fitness Challenges | Multi-Day Workout Programs | FamilyWorkouts";
+const pageDescription = "Join family fitness challenges! 7-day kickstarts, 30-day programs, and seasonal challenges designed for families to complete together.";
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+>
+  <Header slot="header" currentPath="/challenges/" />
+
+  <div class="section-container">
+    <BreadcrumbSchema items={breadcrumbs} />
+  </div>
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-br from-coral/10 via-purple/10 to-sunshine/10 py-12 lg:py-16">
+    <div class="section-container">
+      <div class="max-w-3xl">
+        <h1 class="text-3xl lg:text-4xl font-bold text-navy mb-4">
+          Family Fitness Challenges
+        </h1>
+        <p class="text-lg text-soft-gray mb-4">
+          Multi-day programs designed to build healthy habits together. Pick a challenge and commit as a family!
+        </p>
+        <div class="flex items-center gap-4 text-sm">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-forest"></span>
+            <span>Beginner</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-sunshine"></span>
+            <span>Intermediate</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-coral"></span>
+            <span>Advanced</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Challenges Grid -->
+  <section class="py-12 lg:py-16">
+    <div class="section-container">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {challenges.map((challenge) => (
+          <a
+            href={`/challenges/${challenge.slug}/`}
+            class="card overflow-hidden group"
+          >
+            {challenge.badge && (
+              <div class="bg-gradient-sunrise text-navy text-xs font-bold px-3 py-1">
+                {challenge.badge}
+              </div>
+            )}
+            <div class="p-6">
+              <div class="text-4xl mb-4">{challenge.icon}</div>
+              <h2 class="font-bold text-lg text-navy mb-2 group-hover:text-coral transition-colors">
+                {challenge.title}
+              </h2>
+              <p class="text-soft-gray text-sm mb-4">
+                {challenge.description}
+              </p>
+              <div class="flex items-center gap-3">
+                <span class="text-sm font-medium text-navy">
+                  {challenge.duration} days
+                </span>
+                <span class:list={[
+                  "text-xs px-2 py-1 rounded-full capitalize",
+                  difficultyColors[challenge.difficulty]
+                ]}>
+                  {challenge.difficulty}
+                </span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="py-12 lg:py-16 bg-cloud">
+    <div class="section-container">
+      <h2 class="text-2xl font-bold text-navy mb-8 text-center">How Challenges Work</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        <div class="text-center">
+          <div class="w-12 h-12 bg-coral text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">1</div>
+          <h3 class="font-bold text-navy mb-2">Pick a Challenge</h3>
+          <p class="text-soft-gray text-sm">Choose a challenge that fits your family's schedule and fitness level.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-12 h-12 bg-coral text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">2</div>
+          <h3 class="font-bold text-navy mb-2">Follow Along Daily</h3>
+          <p class="text-soft-gray text-sm">Complete each day's workout together. Rest days are built in!</p>
+        </div>
+        <div class="text-center">
+          <div class="w-12 h-12 bg-coral text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">3</div>
+          <h3 class="font-bold text-navy mb-2">Celebrate Together</h3>
+          <p class="text-soft-gray text-sm">Finish the challenge and earn your family badge!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+  <MobileNav slot="mobile-nav" currentPath="/challenges/" />
+</BaseLayout>

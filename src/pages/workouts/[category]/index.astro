@@ -1,0 +1,272 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Header from '../../../components/global/Header.astro';
+import Footer from '../../../components/global/Footer.astro';
+import MobileNav from '../../../components/global/MobileNav.astro';
+import WorkoutCard from '../../../components/workout/WorkoutCard.astro';
+import BreadcrumbSchema from '../../../components/seo/BreadcrumbSchema.astro';
+import FAQSchema from '../../../components/seo/FAQSchema.astro';
+
+import categories from '../../../data/categories.json';
+
+export function getStaticPaths() {
+  return [
+    { params: { category: 'dance' } },
+    { params: { category: 'yoga' } },
+    { params: { category: 'hiit' } },
+    { params: { category: 'strength' } },
+    { params: { category: 'sports' } },
+    { params: { category: 'outdoor' } },
+    { params: { category: 'cultural' } },
+    { params: { category: 'adaptive' } },
+  ];
+}
+
+const { category } = Astro.params;
+
+const categoryData = categories.find(c => c.slug === category);
+
+if (!categoryData) {
+  return Astro.redirect('/404');
+}
+
+// Sample workouts for each category
+const categoryWorkouts: Record<string, any[]> = {
+  dance: [
+    {
+      title: "Family Dance Party",
+      description: "Get the whole family moving with this fun, energetic 15-minute dance workout!",
+      slug: "family-dance-party",
+      category: "dance",
+      duration: 15,
+      difficulty: "beginner" as const,
+      ageGroups: ["toddlers", "preschool", "kids", "teens", "adults", "seniors"],
+      youtubeId: "dQw4w9WgXcQ",
+      featured: true
+    },
+    {
+      title: "Bollywood Dance Fitness",
+      description: "High-energy Bollywood dance moves the whole family will love!",
+      slug: "bollywood-dance-fitness",
+      category: "dance",
+      duration: 20,
+      difficulty: "intermediate" as const,
+      ageGroups: ["kids", "teens", "adults"],
+      youtubeId: "dQw4w9WgXcQ"
+    },
+    {
+      title: "African Dance Rhythms",
+      description: "Learn energetic moves from West African dance traditions.",
+      slug: "african-dance-rhythms",
+      category: "dance",
+      duration: 18,
+      difficulty: "intermediate" as const,
+      ageGroups: ["kids", "teens", "adults"],
+      youtubeId: "dQw4w9WgXcQ"
+    },
+    {
+      title: "Latin Dance Mix",
+      description: "Salsa, merengue, and cumbia moves for the whole family!",
+      slug: "latin-dance-mix",
+      category: "dance",
+      duration: 22,
+      difficulty: "beginner" as const,
+      ageGroups: ["kids", "teens", "adults"],
+      youtubeId: "dQw4w9WgXcQ"
+    }
+  ],
+  yoga: [
+    {
+      title: "Animal Yoga Adventure",
+      description: "Kids love becoming their favorite animals in this playful yoga session.",
+      slug: "animal-yoga-adventure",
+      category: "yoga",
+      duration: 12,
+      difficulty: "beginner" as const,
+      ageGroups: ["preschool", "kids"],
+      youtubeId: "dQw4w9WgXcQ"
+    },
+    {
+      title: "Chair Yoga for Seniors",
+      description: "Gentle seated yoga perfect for grandparents and low-impact exercise.",
+      slug: "chair-yoga-seniors",
+      category: "yoga",
+      duration: 15,
+      difficulty: "beginner" as const,
+      ageGroups: ["adults", "seniors"],
+      youtubeId: "dQw4w9WgXcQ"
+    },
+    {
+      title: "Family Sun Salutation",
+      description: "Learn the classic Surya Namaskar sequence together as a family.",
+      slug: "family-sun-salutation",
+      category: "yoga",
+      duration: 10,
+      difficulty: "beginner" as const,
+      ageGroups: ["kids", "teens", "adults", "seniors"],
+      youtubeId: "dQw4w9WgXcQ"
+    }
+  ],
+  cultural: [
+    {
+      title: "Radio Taiso Morning Routine",
+      description: "Japan's famous 3-minute morning exercise routine practiced by millions!",
+      slug: "radio-taiso-morning",
+      category: "cultural",
+      duration: 3,
+      difficulty: "beginner" as const,
+      ageGroups: ["kids", "teens", "adults", "seniors"],
+      youtubeId: "dQw4w9WgXcQ"
+    },
+    {
+      title: "Capoeira Basics for Families",
+      description: "Learn the fundamentals of this Brazilian martial art and dance form.",
+      slug: "capoeira-basics",
+      category: "cultural",
+      duration: 25,
+      difficulty: "intermediate" as const,
+      ageGroups: ["kids", "teens", "adults"],
+      youtubeId: "dQw4w9WgXcQ"
+    },
+    {
+      title: "Tai Chi for Families",
+      description: "Slow, meditative movements perfect for all ages and abilities.",
+      slug: "tai-chi-families",
+      category: "cultural",
+      duration: 15,
+      difficulty: "beginner" as const,
+      ageGroups: ["kids", "teens", "adults", "seniors"],
+      youtubeId: "dQw4w9WgXcQ"
+    },
+    {
+      title: "Irish Step Dance Basics",
+      description: "Learn the basics of this energetic Celtic tradition!",
+      slug: "irish-step-dance",
+      category: "cultural",
+      duration: 20,
+      difficulty: "intermediate" as const,
+      ageGroups: ["kids", "teens", "adults"],
+      youtubeId: "dQw4w9WgXcQ"
+    }
+  ],
+  hiit: [
+    {
+      title: "10-Minute Family HIIT",
+      description: "Quick but effective! High-energy intervals for the whole family.",
+      slug: "10-minute-family-hiit",
+      category: "hiit",
+      duration: 10,
+      difficulty: "intermediate" as const,
+      ageGroups: ["kids", "teens", "adults"],
+      youtubeId: "dQw4w9WgXcQ"
+    }
+  ],
+  sports: [
+    {
+      title: "Backyard Sports Challenge",
+      description: "Soccer, basketball, and more! Turn your backyard into a family fitness zone.",
+      slug: "backyard-sports-challenge",
+      category: "sports",
+      duration: 20,
+      difficulty: "beginner" as const,
+      ageGroups: ["kids", "teens", "adults"],
+      youtubeId: "dQw4w9WgXcQ"
+    }
+  ],
+  strength: [],
+  outdoor: [],
+  adaptive: []
+};
+
+const workouts = categoryWorkouts[category] || [];
+
+const breadcrumbs = [
+  { name: "Home", href: "/" },
+  { name: "Workouts", href: "/workouts/" },
+  { name: categoryData.name, href: `/workouts/${category}/` }
+];
+
+const faqs = [
+  {
+    question: `What is a ${categoryData.name.toLowerCase()} workout?`,
+    answer: `${categoryData.name} workouts are ${categoryData.description.toLowerCase()} These workouts are designed for the whole family to enjoy together.`
+  },
+  {
+    question: `Can beginners do ${categoryData.name.toLowerCase()} workouts?`,
+    answer: `Yes! We have ${categoryData.name.toLowerCase()} workouts for all skill levels, from complete beginners to advanced. Each workout clearly shows its difficulty level.`
+  },
+  {
+    question: `Do I need equipment for ${categoryData.name.toLowerCase()} workouts?`,
+    answer: `Most of our ${categoryData.name.toLowerCase()} workouts require no equipment at all. Just you, your family, and a bit of space to move!`
+  }
+];
+
+const pageTitle = `${categoryData.name} Workouts for Families | Free ${categoryData.name} Videos | FamilyWorkouts`;
+const pageDescription = `Free ${categoryData.name.toLowerCase()} workouts for the whole family. ${categoryData.description} ${categoryData.workoutCount}+ videos for all ages.`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+>
+  <Header slot="header" currentPath={`/workouts/${category}/`} />
+
+  <div class="section-container">
+    <BreadcrumbSchema items={breadcrumbs} />
+  </div>
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-br from-coral/10 via-sunshine/5 to-ocean/10 py-12 lg:py-16">
+    <div class="section-container">
+      <div class="max-w-3xl">
+        <div class="text-5xl mb-4">{categoryData.icon}</div>
+        <h1 class="text-3xl lg:text-4xl font-bold text-navy mb-4">
+          {categoryData.name} Workouts for Families
+        </h1>
+        <p class="text-lg text-soft-gray mb-4">
+          {categoryData.description}
+        </p>
+        <p class="text-coral font-semibold">
+          {categoryData.workoutCount}+ free workouts available
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Workouts Grid -->
+  <section class="py-12 lg:py-16">
+    <div class="section-container">
+      {workouts.length > 0 ? (
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {workouts.map((workout) => (
+            <WorkoutCard {...workout} />
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-16">
+          <div class="text-6xl mb-4">{categoryData.icon}</div>
+          <h2 class="text-xl font-bold text-navy mb-2">Coming Soon!</h2>
+          <p class="text-soft-gray mb-6">
+            We're adding new {categoryData.name.toLowerCase()} workouts. Check back soon!
+          </p>
+          <a href="/workouts/" class="btn-primary">
+            Browse Other Workouts
+          </a>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-12 lg:py-16 bg-cloud">
+    <div class="section-container">
+      <h2 class="text-2xl font-bold text-navy mb-8">
+        Frequently Asked Questions
+      </h2>
+      <FAQSchema faqs={faqs} />
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+  <MobileNav slot="mobile-nav" currentPath="/workouts/" />
+</BaseLayout>

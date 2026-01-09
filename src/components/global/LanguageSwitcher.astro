@@ -1,0 +1,97 @@
+---
+interface Props {
+  lang?: string;
+}
+
+const { lang = 'en' } = Astro.props;
+
+const languages = [
+  { code: 'en', name: 'English', flag: '🇺🇸' },
+  { code: 'es', name: 'Español', flag: '🇪🇸' },
+  { code: 'pt', name: 'Português', flag: '🇧🇷' },
+  { code: 'hi', name: 'हिन्दी', flag: '🇮🇳' },
+  { code: 'ar', name: 'العربية', flag: '🇸🇦' },
+  { code: 'zh', name: '中文', flag: '🇨🇳' },
+  { code: 'fr', name: 'Français', flag: '🇫🇷' },
+];
+
+const currentLang = languages.find(l => l.code === lang) || languages[0];
+---
+
+<div class="relative" data-language-switcher>
+  <button
+    type="button"
+    class="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors text-sm font-medium"
+    aria-expanded="false"
+    aria-haspopup="listbox"
+    aria-label="Select language"
+    data-lang-button
+  >
+    <span class="text-lg">{currentLang.flag}</span>
+    <span class="hidden sm:inline">{currentLang.code.toUpperCase()}</span>
+    <svg class="w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+    </svg>
+  </button>
+
+  <div
+    class="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-2 hidden z-50"
+    role="listbox"
+    data-lang-dropdown
+  >
+    {languages.map((language) => {
+      const href = language.code === 'en' ? Astro.url.pathname : `/${language.code}${Astro.url.pathname}`;
+      return (
+        <a
+          href={href}
+          class:list={[
+            'flex items-center gap-3 px-4 py-2 hover:bg-gray-50 transition-colors',
+            language.code === lang && 'bg-coral/10 text-coral'
+          ]}
+          role="option"
+          aria-selected={language.code === lang}
+        >
+          <span class="text-lg">{language.flag}</span>
+          <span class="font-medium">{language.name}</span>
+          {language.code === lang && (
+            <svg class="w-4 h-4 ml-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+          )}
+        </a>
+      );
+    })}
+  </div>
+</div>
+
+<script>
+  // Language switcher dropdown functionality
+  document.querySelectorAll('[data-language-switcher]').forEach((switcher) => {
+    const button = switcher.querySelector('[data-lang-button]');
+    const dropdown = switcher.querySelector('[data-lang-dropdown]');
+
+    if (button && dropdown) {
+      button.addEventListener('click', () => {
+        const isExpanded = button.getAttribute('aria-expanded') === 'true';
+        button.setAttribute('aria-expanded', String(!isExpanded));
+        dropdown.classList.toggle('hidden');
+      });
+
+      // Close on click outside
+      document.addEventListener('click', (e) => {
+        if (!switcher.contains(e.target as Node)) {
+          button.setAttribute('aria-expanded', 'false');
+          dropdown.classList.add('hidden');
+        }
+      });
+
+      // Close on escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          button.setAttribute('aria-expanded', 'false');
+          dropdown.classList.add('hidden');
+        }
+      });
+    }
+  });
+</script>

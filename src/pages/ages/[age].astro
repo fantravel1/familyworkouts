@@ -1,0 +1,303 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/global/Header.astro';
+import Footer from '../../components/global/Footer.astro';
+import MobileNav from '../../components/global/MobileNav.astro';
+import WorkoutCard from '../../components/workout/WorkoutCard.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+import FAQSchema from '../../components/seo/FAQSchema.astro';
+
+import ageGroups from '../../data/age-groups.json';
+
+export function getStaticPaths() {
+  return ageGroups.map(age => ({
+    params: { age: age.slug },
+    props: { ageData: age }
+  }));
+}
+
+const { ageData } = Astro.props;
+
+// Sample workouts for each age group
+const ageWorkouts: Record<string, any[]> = {
+  toddlers: [
+    {
+      title: "Toddler Dance Party",
+      description: "Simple movements and fun music for your littlest dancers!",
+      slug: "toddler-dance-party",
+      category: "dance",
+      duration: 8,
+      difficulty: "beginner" as const,
+      ageGroups: ["toddlers", "preschool"],
+      youtubeId: "dQw4w9WgXcQ"
+    },
+    {
+      title: "Animal Sounds & Moves",
+      description: "Make animal sounds while moving like your favorite creatures!",
+      slug: "animal-sounds-moves",
+      category: "games",
+      duration: 10,
+      difficulty: "beginner" as const,
+      ageGroups: ["toddlers", "preschool"],
+      youtubeId: "dQw4w9WgXcQ"
+    }
+  ],
+  preschool: [
+    {
+      title: "Animal Yoga Adventure",
+      description: "Kids love becoming their favorite animals in this playful yoga session.",
+      slug: "animal-yoga-adventure",
+      category: "yoga",
+      duration: 12,
+      difficulty: "beginner" as const,
+      ageGroups: ["preschool", "kids"],
+      youtubeId: "dQw4w9WgXcQ"
+    },
+    {
+      title: "Freeze Dance Game",
+      description: "Dance when the music plays, freeze when it stops!",
+      slug: "freeze-dance-game",
+      category: "dance",
+      duration: 10,
+      difficulty: "beginner" as const,
+      ageGroups: ["preschool", "kids"],
+      youtubeId: "dQw4w9WgXcQ"
+    }
+  ],
+  kids: [
+    {
+      title: "Family Dance Party",
+      description: "Get the whole family moving with this fun, energetic dance workout!",
+      slug: "family-dance-party",
+      category: "dance",
+      duration: 15,
+      difficulty: "beginner" as const,
+      ageGroups: ["kids", "teens", "adults"],
+      youtubeId: "dQw4w9WgXcQ"
+    },
+    {
+      title: "Backyard Sports Challenge",
+      description: "Soccer, basketball, and more! Turn your backyard into a fitness zone.",
+      slug: "backyard-sports-challenge",
+      category: "sports",
+      duration: 20,
+      difficulty: "beginner" as const,
+      ageGroups: ["kids", "teens", "adults"],
+      youtubeId: "dQw4w9WgXcQ"
+    },
+    {
+      title: "Traditional Games: Tag Variations",
+      description: "Freeze tag, shadow tag, and more from around the world!",
+      slug: "tag-variations",
+      category: "cultural",
+      duration: 15,
+      difficulty: "beginner" as const,
+      ageGroups: ["kids", "teens"],
+      youtubeId: "dQw4w9WgXcQ"
+    }
+  ],
+  teens: [
+    {
+      title: "10-Minute Family HIIT",
+      description: "Quick but effective! High-energy intervals the whole family can do.",
+      slug: "10-minute-family-hiit",
+      category: "hiit",
+      duration: 10,
+      difficulty: "intermediate" as const,
+      ageGroups: ["teens", "adults"],
+      youtubeId: "dQw4w9WgXcQ"
+    },
+    {
+      title: "Bollywood Dance Fitness",
+      description: "High-energy Bollywood dance moves everyone will love!",
+      slug: "bollywood-dance-fitness",
+      category: "dance",
+      duration: 20,
+      difficulty: "intermediate" as const,
+      ageGroups: ["teens", "adults"],
+      youtubeId: "dQw4w9WgXcQ"
+    },
+    {
+      title: "Capoeira Basics",
+      description: "Learn the fundamentals of this Brazilian martial art and dance form.",
+      slug: "capoeira-basics",
+      category: "cultural",
+      duration: 25,
+      difficulty: "intermediate" as const,
+      ageGroups: ["teens", "adults"],
+      youtubeId: "dQw4w9WgXcQ"
+    }
+  ],
+  adults: [
+    {
+      title: "Family Dance Party",
+      description: "Get everyone moving with this fun, energetic dance workout!",
+      slug: "family-dance-party",
+      category: "dance",
+      duration: 15,
+      difficulty: "beginner" as const,
+      ageGroups: ["kids", "teens", "adults"],
+      youtubeId: "dQw4w9WgXcQ"
+    },
+    {
+      title: "Tai Chi for Families",
+      description: "Slow, meditative movements perfect for all ages.",
+      slug: "tai-chi-families",
+      category: "cultural",
+      duration: 15,
+      difficulty: "beginner" as const,
+      ageGroups: ["adults", "seniors"],
+      youtubeId: "dQw4w9WgXcQ"
+    }
+  ],
+  seniors: [
+    {
+      title: "Chair Yoga for Seniors",
+      description: "Gentle seated yoga perfect for grandparents and low-impact exercise.",
+      slug: "chair-yoga-seniors",
+      category: "yoga",
+      duration: 15,
+      difficulty: "beginner" as const,
+      ageGroups: ["seniors"],
+      youtubeId: "dQw4w9WgXcQ"
+    },
+    {
+      title: "Radio Taiso Morning Routine",
+      description: "Japan's famous 3-minute morning exercise routine for all ages!",
+      slug: "radio-taiso-morning",
+      category: "cultural",
+      duration: 3,
+      difficulty: "beginner" as const,
+      ageGroups: ["adults", "seniors"],
+      youtubeId: "dQw4w9WgXcQ"
+    },
+    {
+      title: "Tai Chi for Families",
+      description: "Slow, meditative movements perfect for all ages and abilities.",
+      slug: "tai-chi-families",
+      category: "cultural",
+      duration: 15,
+      difficulty: "beginner" as const,
+      ageGroups: ["adults", "seniors"],
+      youtubeId: "dQw4w9WgXcQ"
+    }
+  ]
+};
+
+const workouts = ageWorkouts[ageData.slug] || [];
+
+const breadcrumbs = [
+  { name: "Home", href: "/" },
+  { name: "By Age", href: "/ages/" },
+  { name: ageData.name, href: `/ages/${ageData.slug}/` }
+];
+
+const faqs = [
+  {
+    question: `How much exercise should ${ageData.name.toLowerCase()} get daily?`,
+    answer: `${ageData.activityTarget}. Our workouts are designed to help your family meet these guidelines in fun, engaging ways.`
+  },
+  {
+    question: `Are these workouts safe for ${ageData.name.toLowerCase()}?`,
+    answer: `Yes! All our ${ageData.name.toLowerCase()} workouts are designed with safety in mind. We include modifications and always recommend adult supervision for younger children.`
+  },
+  {
+    question: `What if my ${ageData.name.toLowerCase().slice(0, -1)} can't keep up?`,
+    answer: `That's perfectly fine! Every workout includes modifications. The goal is participation and fun, not perfection. Go at your own pace.`
+  }
+];
+
+const pageTitle = `${ageData.name} Workouts (${ageData.ageRange}) | Free Family Exercise Videos | FamilyWorkouts`;
+const pageDescription = `Free exercise videos for ${ageData.name.toLowerCase()} (${ageData.ageRange}). ${ageData.description} Age-appropriate family workouts with modifications.`;
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+>
+  <Header slot="header" currentPath="/ages/" />
+
+  <div class="section-container">
+    <BreadcrumbSchema items={breadcrumbs} />
+  </div>
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-br from-ocean/10 via-purple/5 to-coral/10 py-12 lg:py-16">
+    <div class="section-container">
+      <div class="max-w-3xl">
+        <div class="text-6xl mb-4">{ageData.icon}</div>
+        <h1 class="text-3xl lg:text-4xl font-bold text-navy mb-2">
+          {ageData.name} Workouts
+        </h1>
+        <p class="text-xl text-coral font-medium mb-4">{ageData.ageRange}</p>
+        <p class="text-lg text-soft-gray mb-6">
+          {ageData.description}
+        </p>
+
+        <div class="bg-white/80 backdrop-blur-sm rounded-xl p-4 inline-block">
+          <p class="text-sm text-navy">
+            <span class="font-semibold">Recommended activity:</span> {ageData.activityTarget}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tips Section -->
+  <section class="py-8 bg-white border-b border-gray-100">
+    <div class="section-container">
+      <h2 class="font-bold text-navy mb-4">Tips for {ageData.name}</h2>
+      <div class="flex flex-wrap gap-3">
+        {ageData.tips.map((tip: string) => (
+          <span class="inline-flex items-center gap-2 bg-ocean/10 text-ocean px-4 py-2 rounded-full text-sm">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            {tip}
+          </span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Workouts Grid -->
+  <section class="py-12 lg:py-16">
+    <div class="section-container">
+      <h2 class="text-2xl font-bold text-navy mb-8">
+        Workouts for {ageData.name}
+      </h2>
+
+      {workouts.length > 0 ? (
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {workouts.map((workout) => (
+            <WorkoutCard {...workout} />
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-16">
+          <div class="text-6xl mb-4">{ageData.icon}</div>
+          <h3 class="text-xl font-bold text-navy mb-2">Coming Soon!</h3>
+          <p class="text-soft-gray mb-6">
+            We're adding workouts specifically for {ageData.name.toLowerCase()}. Check back soon!
+          </p>
+          <a href="/workouts/" class="btn-primary">
+            Browse All Workouts
+          </a>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="py-12 lg:py-16 bg-cloud">
+    <div class="section-container">
+      <h2 class="text-2xl font-bold text-navy mb-8">
+        Frequently Asked Questions
+      </h2>
+      <FAQSchema faqs={faqs} />
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+  <MobileNav slot="mobile-nav" currentPath="/ages/" />
+</BaseLayout>

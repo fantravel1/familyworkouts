@@ -1,0 +1,45 @@
+---
+import SchemaMarkup from './SchemaMarkup.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  thumbnailUrl: string;
+  youtubeId: string;
+  duration: number; // in minutes
+  uploadDate: string; // ISO date string
+  category?: string;
+}
+
+const { title, description, thumbnailUrl, youtubeId, duration, uploadDate, category } = Astro.props;
+
+// Convert minutes to ISO 8601 duration format (PT15M for 15 minutes)
+const isoDuration = `PT${duration}M`;
+
+const videoSchema = {
+  "name": title,
+  "description": description,
+  "thumbnailUrl": thumbnailUrl,
+  "uploadDate": uploadDate,
+  "duration": isoDuration,
+  "contentUrl": `https://www.youtube.com/watch?v=${youtubeId}`,
+  "embedUrl": `https://www.youtube.com/embed/${youtubeId}`,
+  "publisher": {
+    "@type": "Organization",
+    "name": "FamilyWorkouts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://familyworkouts.com/images/logo.png"
+    }
+  },
+  ...(category && { "genre": category }),
+  "interactionStatistic": {
+    "@type": "InteractionCounter",
+    "interactionType": { "@type": "WatchAction" },
+    "userInteractionCount": 0
+  },
+  "isFamilyFriendly": true
+};
+---
+
+<SchemaMarkup type="VideoObject" data={videoSchema} />

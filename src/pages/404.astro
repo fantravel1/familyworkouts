@@ -1,0 +1,62 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/global/Header.astro';
+import Footer from '../components/global/Footer.astro';
+import MobileNav from '../components/global/MobileNav.astro';
+
+const pageTitle = "Page Not Found | FamilyWorkouts";
+const pageDescription = "The page you're looking for doesn't exist. Let's get you back to exercising!";
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  noindex={true}
+>
+  <Header slot="header" currentPath="" />
+
+  <section class="min-h-[60vh] flex items-center justify-center py-16">
+    <div class="section-container text-center">
+      <div class="text-8xl mb-6">🏃‍♂️💨</div>
+      <h1 class="text-4xl lg:text-5xl font-bold text-navy mb-4">
+        Oops! Page Not Found
+      </h1>
+      <p class="text-xl text-soft-gray mb-8 max-w-lg mx-auto">
+        Looks like this page ran away! Don't worry, let's get you back to exercising with your family.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/" class="btn-primary">
+          <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+          </svg>
+          Go Home
+        </a>
+        <a href="/workouts/" class="btn-secondary">
+          Browse Workouts
+        </a>
+      </div>
+
+      <div class="mt-12">
+        <p class="text-soft-gray mb-4">Popular destinations:</p>
+        <div class="flex flex-wrap justify-center gap-3">
+          <a href="/workouts/dance/" class="text-coral hover:text-coral/80 transition-colors">
+            💃 Dance Workouts
+          </a>
+          <a href="/workouts/yoga/" class="text-coral hover:text-coral/80 transition-colors">
+            🧘 Yoga
+          </a>
+          <a href="/ages/kids/" class="text-coral hover:text-coral/80 transition-colors">
+            👧 Kids Workouts
+          </a>
+          <a href="/workouts/cultural/" class="text-coral hover:text-coral/80 transition-colors">
+            🌍 Cultural
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+  <MobileNav slot="mobile-nav" currentPath="" />
+</BaseLayout>

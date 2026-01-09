@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/global/Header.astro';
+import Footer from '../../components/global/Footer.astro';
+import MobileNav from '../../components/global/MobileNav.astro';
+import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
+
+const breadcrumbs = [
+  { name: "Home", href: "/" },
+  { name: "Guides", href: "/guides/" }
+];
+
+const guides = [
+  {
+    title: "Getting Started with Family Workouts",
+    description: "Everything you need to know to start exercising as a family. Tips for all ages and abilities.",
+    slug: "getting-started",
+    icon: "🚀",
+    readTime: 8
+  },
+  {
+    title: "How to Make Exercise Fun for Kids",
+    description: "Turn fitness into play! Strategies for engaging children of all ages in physical activity.",
+    slug: "exercise-fun-for-kids",
+    icon: "🎮",
+    readTime: 6
+  },
+  {
+    title: "Multi-Generational Workouts Guide",
+    description: "How to create workout sessions that work for toddlers, teens, parents, and grandparents.",
+    slug: "multi-generational-workouts",
+    icon: "👨‍👩‍👧‍👦",
+    readTime: 10
+  },
+  {
+    title: "No-Equipment Home Workouts",
+    description: "Effective exercises using just your body weight. Perfect for any space, any budget.",
+    slug: "no-equipment-workouts",
+    icon: "🏠",
+    readTime: 7
+  },
+  {
+    title: "Creating a Family Fitness Routine",
+    description: "Build sustainable habits with a weekly family workout schedule that actually sticks.",
+    slug: "family-fitness-routine",
+    icon: "📅",
+    readTime: 9
+  },
+  {
+    title: "Adaptive Exercises for All Abilities",
+    description: "Inclusive workout modifications for family members with different physical abilities.",
+    slug: "adaptive-exercises",
+    icon: "♿",
+    readTime: 8
+  }
+];
+
+const pageTitle = "Family Fitness Guides | How to Exercise Together | FamilyWorkouts";
+const pageDescription = "Expert guides on family fitness. Learn how to exercise with kids, create workout routines, and make fitness fun for the whole family.";
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+>
+  <Header slot="header" currentPath="/guides/" />
+
+  <div class="section-container">
+    <BreadcrumbSchema items={breadcrumbs} />
+  </div>
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-br from-purple/10 via-ocean/5 to-coral/10 py-12 lg:py-16">
+    <div class="section-container">
+      <div class="max-w-3xl">
+        <h1 class="text-3xl lg:text-4xl font-bold text-navy mb-4">
+          Family Fitness Guides
+        </h1>
+        <p class="text-lg text-soft-gray">
+          Expert advice on getting your family moving together. From first steps to advanced routines, we've got you covered.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Guides Grid -->
+  <section class="py-12 lg:py-16">
+    <div class="section-container">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {guides.map((guide) => (
+          <a
+            href={`/guides/${guide.slug}/`}
+            class="card p-6 group"
+          >
+            <div class="text-4xl mb-4">{guide.icon}</div>
+            <h2 class="font-bold text-lg text-navy mb-2 group-hover:text-coral transition-colors">
+              {guide.title}
+            </h2>
+            <p class="text-soft-gray text-sm mb-4">
+              {guide.description}
+            </p>
+            <div class="flex items-center text-sm text-soft-gray">
+              <svg class="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              {guide.readTime} min read
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+  <MobileNav slot="mobile-nav" currentPath="/guides/" />
+</BaseLayout>

@@ -1,0 +1,82 @@
+---
+import LanguageSwitcher from './LanguageSwitcher.astro';
+
+interface Props {
+  currentPath?: string;
+  lang?: string;
+}
+
+const { currentPath = '/', lang = 'en' } = Astro.props;
+
+const navigation = [
+  { name: 'Workouts', href: '/workouts/', icon: 'workout' },
+  { name: 'By Age', href: '/ages/', icon: 'ages' },
+  { name: 'Challenges', href: '/challenges/', icon: 'challenges' },
+  { name: 'Guides', href: '/guides/', icon: 'guides' },
+];
+
+const isActive = (href: string) => currentPath.startsWith(href);
+---
+
+<header class="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-100 safe-area-inset-top">
+  <div class="section-container">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-2 group" aria-label="FamilyWorkouts Home">
+        <div class="w-10 h-10 bg-gradient-sunrise rounded-xl flex items-center justify-center transform group-hover:scale-105 transition-transform">
+          <svg class="w-6 h-6 text-navy" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg>
+        </div>
+        <span class="font-bold text-xl text-navy hidden sm:block">
+          Family<span class="text-coral">Workouts</span>
+        </span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden lg:flex items-center gap-1" aria-label="Main navigation">
+        {navigation.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              'px-4 py-2 rounded-lg font-medium transition-colors duration-150',
+              isActive(item.href)
+                ? 'bg-coral/10 text-coral'
+                : 'text-navy hover:bg-gray-100'
+            ]}
+            aria-current={isActive(item.href) ? 'page' : undefined}
+          >
+            {item.name}
+          </a>
+        ))}
+      </nav>
+
+      <!-- Right Side Actions -->
+      <div class="flex items-center gap-2">
+        <!-- Search Button -->
+        <button
+          type="button"
+          class="p-2 rounded-lg text-soft-gray hover:text-navy hover:bg-gray-100 transition-colors"
+          aria-label="Search workouts"
+        >
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </button>
+
+        <!-- Language Switcher (Desktop) -->
+        <div class="hidden md:block">
+          <LanguageSwitcher lang={lang} />
+        </div>
+
+        <!-- CTA Button (Desktop) -->
+        <a
+          href="/workouts/"
+          class="hidden md:inline-flex btn-primary text-sm"
+        >
+          Start Workout
+        </a>
+      </div>
+    </div>
+  </div>
+</header>

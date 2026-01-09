@@ -1,0 +1,43 @@
+---
+interface Props {
+  difficulty: 'beginner' | 'intermediate' | 'advanced';
+  size?: 'sm' | 'md' | 'lg';
+}
+
+const { difficulty, size = 'md' } = Astro.props;
+
+const colors: Record<string, string> = {
+  beginner: 'bg-forest/20 text-forest border-forest/30',
+  intermediate: 'bg-sunshine/30 text-amber-700 border-amber-300',
+  advanced: 'bg-coral/20 text-coral border-coral/30',
+};
+
+const sizes: Record<string, string> = {
+  sm: 'text-xs px-2 py-0.5',
+  md: 'text-sm px-2.5 py-1',
+  lg: 'text-base px-3 py-1.5',
+};
+
+const labels: Record<string, string> = {
+  beginner: 'Beginner',
+  intermediate: 'Intermediate',
+  advanced: 'Advanced',
+};
+
+const icons: Record<string, string> = {
+  beginner: '🌱',
+  intermediate: '🌿',
+  advanced: '🌳',
+};
+---
+
+<span
+  class:list={[
+    'inline-flex items-center gap-1 font-medium rounded-full border',
+    colors[difficulty],
+    sizes[size]
+  ]}
+>
+  <span aria-hidden="true">{icons[difficulty]}</span>
+  <span>{labels[difficulty]}</span>
+</span>

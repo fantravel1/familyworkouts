@@ -1,0 +1,126 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  type?: 'website' | 'article';
+  canonicalUrl?: string;
+  lang?: string;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  image = '/images/og-default.jpg',
+  type = 'website',
+  canonicalUrl,
+  lang = 'en',
+  noindex = false
+} = Astro.props;
+
+const siteUrl = 'https://familyworkouts.com';
+const fullCanonicalUrl = canonicalUrl || new URL(Astro.url.pathname, siteUrl).href;
+const fullImageUrl = image.startsWith('http') ? image : new URL(image, siteUrl).href;
+
+// Language direction
+const rtlLanguages = ['ar', 'he', 'fa'];
+const dir = rtlLanguages.includes(lang) ? 'rtl' : 'ltr';
+---
+
+<!DOCTYPE html>
+<html lang={lang} dir={dir} class="scroll-smooth">
+<head>
+  <!-- Essential Meta Tags -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <!-- Primary Meta Tags -->
+  <title>{title}</title>
+  <meta name="title" content={title} />
+  <meta name="description" content={description} />
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href={fullCanonicalUrl} />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content={type} />
+  <meta property="og:url" content={fullCanonicalUrl} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={fullImageUrl} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="FamilyWorkouts" />
+  <meta property="og:locale" content={lang === 'en' ? 'en_US' : lang} />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content={fullCanonicalUrl} />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={fullImageUrl} />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/manifest.json" />
+
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#FFD93D" />
+  <meta name="msapplication-TileColor" content="#FFD93D" />
+
+  <!-- Preconnect to External Resources -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://i.ytimg.com" />
+
+  <!-- Font Loading -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" />
+
+  <!-- Hreflang Tags for Multilingual -->
+  <link rel="alternate" hreflang="en" href={`${siteUrl}${Astro.url.pathname}`} />
+  <link rel="alternate" hreflang="es" href={`${siteUrl}/es${Astro.url.pathname}`} />
+  <link rel="alternate" hreflang="pt" href={`${siteUrl}/pt${Astro.url.pathname}`} />
+  <link rel="alternate" hreflang="hi" href={`${siteUrl}/hi${Astro.url.pathname}`} />
+  <link rel="alternate" hreflang="ar" href={`${siteUrl}/ar${Astro.url.pathname}`} />
+  <link rel="alternate" hreflang="zh" href={`${siteUrl}/zh${Astro.url.pathname}`} />
+  <link rel="alternate" hreflang="fr" href={`${siteUrl}/fr${Astro.url.pathname}`} />
+  <link rel="alternate" hreflang="x-default" href={`${siteUrl}${Astro.url.pathname}`} />
+
+  <!-- Slot for Additional Head Content -->
+  <slot name="head" />
+</head>
+<body class="min-h-screen bg-cloud text-navy antialiased">
+  <!-- Skip to Content Link for Accessibility -->
+  <a
+    href="#main-content"
+    class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-coral focus:text-white focus:rounded-lg"
+  >
+    Skip to main content
+  </a>
+
+  <slot name="header" />
+
+  <main id="main-content" class="flex-1">
+    <slot />
+  </main>
+
+  <slot name="footer" />
+
+  <!-- Mobile Nav Space (bottom padding for fixed nav) -->
+  <div class="h-16 lg:hidden" aria-hidden="true"></div>
+
+  <slot name="mobile-nav" />
+
+  <!-- Scripts -->
+  <slot name="scripts" />
+</body>
+</html>

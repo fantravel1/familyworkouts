@@ -1,0 +1,74 @@
+{
+  "site": {
+    "name": "FamilyWorkouts",
+    "tagline": "Ejercicio Familiar Gratis para Todas las Edades"
+  },
+  "nav": {
+    "home": "Inicio",
+    "workouts": "Entrenamientos",
+    "ages": "Por Edad",
+    "challenges": "Desafíos",
+    "guides": "Guías",
+    "about": "Nosotros",
+    "contact": "Contacto",
+    "search": "Buscar"
+  },
+  "home": {
+    "hero_title": "Entrenamientos Familiares Gratis",
+    "hero_subtitle": "Ejercítense juntos — desde bebés hasta abuelos",
+    "hero_description": "La plataforma de fitness familiar más grande del mundo. Sin equipo, sin suscripción. Solo tu familia, moviéndose juntos.",
+    "cta_start": "Comienza Tu Primer Entrenamiento",
+    "cta_browse": "Ver Todos los Entrenamientos",
+    "featured_title": "Entrenamientos Destacados",
+    "featured_description": "Entrenamientos seleccionados perfectos para toda la familia",
+    "categories_title": "Explorar por Categoría",
+    "categories_description": "Encuentra el estilo de entrenamiento perfecto para tu familia",
+    "ages_title": "Entrenamientos por Edad",
+    "ages_description": "Actividades diseñadas para cada etapa de la vida",
+    "why_title": "¿Por Qué Entrenamientos Familiares?"
+  },
+  "workout": {
+    "duration": "Duración",
+    "difficulty": "Dificultad",
+    "ages": "Edades",
+    "equipment": "Equipo",
+    "none_needed": "No se necesita equipo",
+    "start_workout": "Comenzar Entrenamiento",
+    "watch_video": "Ver Video",
+    "similar_workouts": "Entrenamientos Similares"
+  },
+  "difficulty": {
+    "beginner": "Principiante",
+    "intermediate": "Intermedio",
+    "advanced": "Avanzado"
+  },
+  "ages": {
+    "all": "Todas las Edades",
+    "toddlers": "Bebés (1-3)",
+    "preschool": "Preescolar (3-5)",
+    "kids": "Niños (5-12)",
+    "teens": "Adolescentes (13-17)",
+    "adults": "Adultos",
+    "seniors": "Adultos Mayores (60+)"
+  },
+  "categories": {
+    "dance": "Baile",
+    "yoga": "Yoga",
+    "hiit": "HIIT",
+    "strength": "Fuerza",
+    "sports": "Deportes",
+    "outdoor": "Al Aire Libre",
+    "cultural": "Cultural",
+    "adaptive": "Adaptado"
+  },
+  "cta": {
+    "get_started": "Comenzar",
+    "learn_more": "Más Información",
+    "view_all": "Ver Todo",
+    "try_now": "Pruébalo Ahora"
+  },
+  "footer": {
+    "tagline": "Fitness gratis para todas las familias",
+    "copyright": "© {year} FamilyWorkouts.com. Fitness gratis para todas las familias."
+  }
+}

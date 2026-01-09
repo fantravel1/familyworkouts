@@ -1,0 +1,85 @@
+---
+interface Props {
+  youtubeId: string;
+  title: string;
+  autoplay?: boolean;
+}
+
+const { youtubeId, title, autoplay = false } = Astro.props;
+
+const thumbnailUrl = `https://i.ytimg.com/vi/${youtubeId}/maxresdefault.jpg`;
+---
+
+<div class="video-container relative w-full aspect-video rounded-2xl overflow-hidden bg-gray-900" data-video-embed>
+  <!-- Thumbnail (shown before interaction) -->
+  <div class="video-placeholder absolute inset-0 cursor-pointer group" data-video-placeholder>
+    <img
+      src={thumbnailUrl}
+      alt={`${title} video thumbnail`}
+      class="w-full h-full object-cover"
+      loading="eager"
+    />
+    <!-- Gradient Overlay -->
+    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+    <!-- Play Button -->
+    <button
+      type="button"
+      class="absolute inset-0 flex items-center justify-center"
+      aria-label={`Play video: ${title}`}
+      data-play-button
+    >
+      <div class="w-20 h-20 bg-coral rounded-full flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-transform">
+        <svg class="w-10 h-10 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+      </div>
+    </button>
+    <!-- Title Overlay -->
+    <div class="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
+      <h2 class="text-white font-bold text-lg sm:text-xl line-clamp-2">{title}</h2>
+    </div>
+  </div>
+
+  <!-- YouTube Embed (loaded on interaction) -->
+  <iframe
+    class="absolute inset-0 w-full h-full hidden"
+    data-video-iframe
+    data-src={`https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&rel=0&modestbranding=1`}
+    title={title}
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+  ></iframe>
+</div>
+
+<script>
+  // Lite YouTube embed - only loads iframe when user clicks
+  document.querySelectorAll('[data-video-embed]').forEach((container) => {
+    const placeholder = container.querySelector('[data-video-placeholder]');
+    const iframe = container.querySelector('[data-video-iframe]') as HTMLIFrameElement;
+    const playButton = container.querySelector('[data-play-button]');
+
+    const loadVideo = () => {
+      if (iframe && placeholder) {
+        const src = iframe.dataset.src;
+        if (src) {
+          iframe.src = src;
+          iframe.classList.remove('hidden');
+          placeholder.classList.add('hidden');
+        }
+      }
+    };
+
+    placeholder?.addEventListener('click', loadVideo);
+    playButton?.addEventListener('click', loadVideo);
+  });
+</script>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

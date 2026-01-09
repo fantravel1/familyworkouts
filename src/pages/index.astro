@@ -1,0 +1,312 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/global/Header.astro';
+import Footer from '../components/global/Footer.astro';
+import MobileNav from '../components/global/MobileNav.astro';
+import WorkoutCard from '../components/workout/WorkoutCard.astro';
+import CategoryCard from '../components/workout/CategoryCard.astro';
+import OrganizationSchema from '../components/seo/OrganizationSchema.astro';
+import SchemaMarkup from '../components/seo/SchemaMarkup.astro';
+
+import categories from '../data/categories.json';
+import ageGroups from '../data/age-groups.json';
+
+// Featured workouts data (in production, this would come from content collections)
+const featuredWorkouts = [
+  {
+    title: "Family Dance Party",
+    description: "Get the whole family moving with this fun, energetic 15-minute dance workout. No experience needed!",
+    slug: "family-dance-party",
+    category: "dance",
+    duration: 15,
+    difficulty: "beginner" as const,
+    ageGroups: ["toddlers", "preschool", "kids", "teens", "adults", "seniors"],
+    youtubeId: "dQw4w9WgXcQ",
+    featured: true
+  },
+  {
+    title: "Animal Yoga Adventure",
+    description: "Kids love becoming their favorite animals in this playful yoga session. Perfect for ages 3-10.",
+    slug: "animal-yoga-adventure",
+    category: "yoga",
+    duration: 12,
+    difficulty: "beginner" as const,
+    ageGroups: ["preschool", "kids"],
+    youtubeId: "dQw4w9WgXcQ",
+    featured: true
+  },
+  {
+    title: "10-Minute Family HIIT",
+    description: "Quick but effective! High-energy intervals the whole family can do together.",
+    slug: "10-minute-family-hiit",
+    category: "hiit",
+    duration: 10,
+    difficulty: "intermediate" as const,
+    ageGroups: ["kids", "teens", "adults"],
+    youtubeId: "dQw4w9WgXcQ",
+    featured: true
+  },
+  {
+    title: "Backyard Sports Challenge",
+    description: "Soccer, basketball, and more! Turn your backyard into a family fitness zone.",
+    slug: "backyard-sports-challenge",
+    category: "sports",
+    duration: 20,
+    difficulty: "beginner" as const,
+    ageGroups: ["kids", "teens", "adults"],
+    youtubeId: "dQw4w9WgXcQ",
+    featured: true
+  },
+  {
+    title: "Chair Yoga for All",
+    description: "Gentle seated yoga perfect for seniors and anyone who prefers low-impact exercise.",
+    slug: "chair-yoga-for-all",
+    category: "yoga",
+    duration: 15,
+    difficulty: "beginner" as const,
+    ageGroups: ["adults", "seniors"],
+    youtubeId: "dQw4w9WgXcQ",
+    featured: true
+  },
+  {
+    title: "World Dance Tour",
+    description: "Travel the world through dance! Learn moves from African, Latin, Asian, and European cultures.",
+    slug: "world-dance-tour",
+    category: "cultural",
+    duration: 20,
+    difficulty: "beginner" as const,
+    ageGroups: ["kids", "teens", "adults"],
+    youtubeId: "dQw4w9WgXcQ",
+    featured: true
+  }
+];
+
+const benefits = [
+  {
+    icon: "❤️",
+    title: "Stronger Family Bonds",
+    description: "Exercising together creates shared experiences and lasting memories that strengthen relationships."
+  },
+  {
+    icon: "🧠",
+    title: "Healthier Kids",
+    description: "Children who exercise with family are more likely to develop lifelong healthy habits."
+  },
+  {
+    icon: "💪",
+    title: "Lead by Example",
+    description: "When kids see parents prioritizing fitness, they learn that health matters."
+  },
+  {
+    icon: "😊",
+    title: "Better Mental Health",
+    description: "Family exercise reduces stress, anxiety, and improves mood for everyone."
+  },
+  {
+    icon: "📱",
+    title: "Less Screen Time",
+    description: "Replace passive screen time with active family fun that everyone enjoys."
+  },
+  {
+    icon: "🌍",
+    title: "Free & Accessible",
+    description: "No gym membership, no expensive equipment. Just you and your family, anywhere."
+  }
+];
+
+const stats = [
+  { value: "1M+", label: "Families Active" },
+  { value: "500+", label: "Free Workouts" },
+  { value: "7", label: "Languages" },
+  { value: "150+", label: "Countries" }
+];
+
+const pageTitle = "Family Workouts: Free Exercise Videos for All Ages | FamilyWorkouts.com";
+const pageDescription = "Free family workout videos for all ages. Dance, yoga, HIIT & more. No equipment needed. Exercise together—toddlers to grandparents!";
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  type="website"
+>
+  <OrganizationSchema slot="head" />
+  <SchemaMarkup
+    slot="head"
+    type="WebSite"
+    data={{
+      name: "FamilyWorkouts",
+      url: "https://familyworkouts.com"
+    }}
+  />
+
+  <Header slot="header" currentPath="/" />
+
+  <!-- Hero Section -->
+  <section class="hero-section relative overflow-hidden">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-30">
+      <div class="absolute top-20 left-10 w-32 h-32 bg-coral/30 rounded-full blur-3xl"></div>
+      <div class="absolute top-40 right-20 w-48 h-48 bg-ocean/30 rounded-full blur-3xl"></div>
+      <div class="absolute bottom-20 left-1/3 w-40 h-40 bg-sunshine/40 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="section-container relative z-10 py-16 lg:py-24">
+      <div class="text-center max-w-4xl mx-auto">
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full mb-6 shadow-sm">
+          <span class="text-lg">🎉</span>
+          <span class="text-sm font-medium text-navy">100% Free • No Equipment • All Ages</span>
+        </div>
+
+        <!-- Main Heading -->
+        <h1 class="text-hero font-extrabold text-navy mb-6 leading-tight">
+          Free <span class="text-gradient">Family Workouts</span>
+          <br class="hidden sm:block" />
+          <span class="text-3xl sm:text-4xl lg:text-5xl">for Every Generation</span>
+        </h1>
+
+        <!-- Subheading -->
+        <p class="text-lg sm:text-xl text-soft-gray mb-8 max-w-2xl mx-auto">
+          Exercise together — toddlers to grandparents. The world's free family fitness platform with 500+ workout videos in 7 languages. No subscription required.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+          <a href="/workouts/" class="btn-primary text-lg px-8 py-4">
+            <svg class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Start Your First Workout
+          </a>
+          <a href="/guides/getting-started/" class="btn-secondary text-lg px-8 py-4">
+            Learn More
+          </a>
+        </div>
+
+        <!-- Trust Indicators -->
+        <div class="flex flex-wrap justify-center gap-8 text-center">
+          {stats.map((stat) => (
+            <div>
+              <div class="text-2xl sm:text-3xl font-bold text-coral">{stat.value}</div>
+              <div class="text-sm text-soft-gray">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+      <svg class="w-6 h-6 text-soft-gray" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+      </svg>
+    </div>
+  </section>
+
+  <!-- Featured Workouts Section -->
+  <section class="py-16 lg:py-20 bg-white">
+    <div class="section-container">
+      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
+        <div>
+          <h2 class="text-2xl lg:text-3xl font-bold text-navy mb-2">Featured Workouts</h2>
+          <p class="text-soft-gray">Hand-picked workouts perfect for the whole family</p>
+        </div>
+        <a
+          href="/workouts/"
+          class="inline-flex items-center gap-2 text-coral font-semibold hover:text-coral/80 transition-colors"
+        >
+          View All Workouts
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {featuredWorkouts.map((workout) => (
+          <WorkoutCard {...workout} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="py-16 lg:py-20 bg-cloud">
+    <div class="section-container">
+      <div class="text-center mb-12">
+        <h2 class="text-2xl lg:text-3xl font-bold text-navy mb-3">Explore by Category</h2>
+        <p class="text-soft-gray max-w-2xl mx-auto">Find the perfect workout style for your family</p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
+        {categories.map((category) => (
+          <CategoryCard {...category} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Age Groups Section -->
+  <section class="py-16 lg:py-20 bg-white">
+    <div class="section-container">
+      <div class="text-center mb-12">
+        <h2 class="text-2xl lg:text-3xl font-bold text-navy mb-3">Workouts by Age</h2>
+        <p class="text-soft-gray max-w-2xl mx-auto">Activities designed for every stage of life</p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        {ageGroups.map((age) => (
+          <a
+            href={`/ages/${age.slug}/`}
+            class="group bg-gradient-to-br from-ocean/10 to-ocean/5 p-6 rounded-2xl border-2 border-ocean/20 hover:border-ocean/40 hover:shadow-lg transition-all text-center"
+          >
+            <div class="text-4xl mb-3">{age.icon}</div>
+            <h3 class="font-bold text-navy mb-1">{age.name}</h3>
+            <p class="text-xs text-soft-gray">{age.ageRange}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Family Workouts Section -->
+  <section class="py-16 lg:py-20 bg-gradient-to-br from-coral/5 via-sunshine/5 to-ocean/5">
+    <div class="section-container">
+      <div class="text-center mb-12">
+        <h2 class="text-2xl lg:text-3xl font-bold text-navy mb-3">Why Exercise Together?</h2>
+        <p class="text-soft-gray max-w-2xl mx-auto">Families who move together, grow together</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {benefits.map((benefit) => (
+          <div class="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+            <div class="text-3xl mb-4">{benefit.icon}</div>
+            <h3 class="font-bold text-navy mb-2">{benefit.title}</h3>
+            <p class="text-soft-gray text-sm">{benefit.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-16 lg:py-24 bg-navy text-white">
+    <div class="section-container text-center">
+      <h2 class="text-2xl lg:text-4xl font-bold mb-4">Ready to Get Your Family Moving?</h2>
+      <p class="text-gray-300 mb-8 max-w-2xl mx-auto">
+        Join millions of families worldwide who are building healthier habits together. It's free, it's fun, and it takes just 10 minutes a day.
+      </p>
+      <a href="/workouts/" class="btn-primary text-lg px-8 py-4 inline-flex">
+        Start Your Free Workout
+        <svg class="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+  <MobileNav slot="mobile-nav" currentPath="/" />
+</BaseLayout>
