@@ -1,0 +1,71 @@
+---
+/**
+ * ArticleSchema - Structured data for guide/article pages
+ * Improves visibility in Google's article rich results
+ */
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  publishDate: string;
+  modifiedDate?: string;
+  author?: string;
+  category?: string;
+  wordCount?: number;
+}
+
+const {
+  title,
+  description,
+  image,
+  publishDate,
+  modifiedDate,
+  author = 'FamilyWorkouts Team',
+  category = 'Family Fitness',
+  wordCount
+} = Astro.props;
+
+const siteUrl = 'https://familyworkouts.com';
+const pageUrl = new URL(Astro.url.pathname, siteUrl).href;
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": title,
+  "description": description,
+  "image": image || `${siteUrl}/images/og-default.jpg`,
+  "datePublished": publishDate,
+  "dateModified": modifiedDate || publishDate,
+  "author": {
+    "@type": "Organization",
+    "name": author,
+    "url": siteUrl
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "FamilyWorkouts",
+    "url": siteUrl,
+    "logo": {
+      "@type": "ImageObject",
+      "url": `${siteUrl}/images/logo.png`
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": pageUrl
+  },
+  "articleSection": category,
+  "inLanguage": "en",
+  "isAccessibleForFree": true,
+  ...(wordCount && { "wordCount": wordCount }),
+  "keywords": [
+    "family fitness",
+    "exercise for kids",
+    "family workouts",
+    category.toLowerCase()
+  ].join(", ")
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />

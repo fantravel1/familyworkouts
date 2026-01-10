@@ -1,0 +1,176 @@
+---
+/**
+ * WorkoutSchema - Comprehensive structured data for workout pages
+ * Includes ExerciseAction, HowTo, and VideoObject schemas
+ */
+
+interface Props {
+  title: string;
+  description: string;
+  duration: number; // in minutes
+  difficulty: 'beginner' | 'intermediate' | 'advanced';
+  category: string;
+  ageGroups: string[];
+  calories?: number;
+  equipment?: string[];
+  thumbnailUrl?: string;
+  youtubeId?: string;
+  publishDate: string;
+  steps?: string[];
+  muscleGroups?: string[];
+}
+
+const {
+  title,
+  description,
+  duration,
+  difficulty,
+  category,
+  ageGroups,
+  calories,
+  equipment = [],
+  thumbnailUrl,
+  youtubeId,
+  publishDate,
+  steps = [],
+  muscleGroups = []
+} = Astro.props;
+
+const siteUrl = 'https://familyworkouts.com';
+const pageUrl = new URL(Astro.url.pathname, siteUrl).href;
+const isoDuration = `PT${duration}M`;
+
+// Map difficulty to schema-friendly terms
+const difficultyMap = {
+  beginner: 'Easy',
+  intermediate: 'Moderate',
+  advanced: 'Difficult'
+};
+
+// Map age groups to audience descriptions
+const audienceMap: Record<string, string> = {
+  toddlers: 'Toddlers (ages 2-3)',
+  preschool: 'Preschoolers (ages 3-5)',
+  kids: 'Children (ages 5-12)',
+  teens: 'Teenagers (ages 13-17)',
+  adults: 'Adults (ages 18-64)',
+  seniors: 'Seniors (ages 65+)'
+};
+
+// Build the HowTo schema
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": title,
+  "description": description,
+  "totalTime": isoDuration,
+  "image": thumbnailUrl || `${siteUrl}/images/workouts/${category}-default.jpg`,
+  "supply": equipment.length > 0 ? equipment.map(item => ({
+    "@type": "HowToSupply",
+    "name": item
+  })) : [{
+    "@type": "HowToSupply",
+    "name": "No equipment needed"
+  }],
+  "tool": [{
+    "@type": "HowToTool",
+    "name": "Open space for movement"
+  }],
+  "step": steps.length > 0 ? steps.map((step, index) => ({
+    "@type": "HowToStep",
+    "position": index + 1,
+    "name": `Step ${index + 1}`,
+    "text": step,
+    "url": `${pageUrl}#step-${index + 1}`
+  })) : [
+    {
+      "@type": "HowToStep",
+      "position": 1,
+      "name": "Warm-up",
+      "text": "Begin with 2-3 minutes of gentle warm-up exercises to prepare your body."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 2,
+      "name": "Main Workout",
+      "text": `Follow along with the ${duration - 4} minute main workout sequence.`
+    },
+    {
+      "@type": "HowToStep",
+      "position": 3,
+      "name": "Cool-down",
+      "text": "Finish with 2 minutes of cool-down stretches."
+    }
+  ],
+  "audience": ageGroups.map(age => audienceMap[age] || age).join(', '),
+  "educationalLevel": difficultyMap[difficulty],
+  "keywords": [title, category, 'family workout', 'exercise', ...ageGroups, ...muscleGroups].join(', '),
+  "inLanguage": "en",
+  "isAccessibleForFree": true,
+  "publisher": {
+    "@type": "Organization",
+    "name": "FamilyWorkouts",
+    "url": siteUrl,
+    "logo": {
+      "@type": "ImageObject",
+      "url": `${siteUrl}/images/logo.png`
+    }
+  }
+};
+
+// Build the ExerciseAction schema (schema.org type for exercises)
+const exerciseSchema = {
+  "@context": "https://schema.org",
+  "@type": "ExerciseAction",
+  "name": title,
+  "description": description,
+  "exerciseType": category,
+  "duration": isoDuration,
+  "associatedAnatomy": muscleGroups.length > 0 ? muscleGroups.map(muscle => ({
+    "@type": "AnatomicalStructure",
+    "name": muscle
+  })) : undefined,
+  "audience": {
+    "@type": "PeopleAudience",
+    "audienceType": "Families",
+    "suggestedMinAge": ageGroups.includes('toddlers') ? 2 : ageGroups.includes('preschool') ? 3 : ageGroups.includes('kids') ? 5 : 10,
+    "suggestedMaxAge": ageGroups.includes('seniors') ? 100 : ageGroups.includes('adults') ? 65 : 17
+  },
+  ...(calories && { "calories": calories }),
+  "sameAs": pageUrl
+};
+
+// Build VideoObject schema if YouTube ID provided
+const videoSchema = youtubeId ? {
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": title,
+  "description": description,
+  "thumbnailUrl": thumbnailUrl || `https://i.ytimg.com/vi/${youtubeId}/maxresdefault.jpg`,
+  "uploadDate": publishDate,
+  "duration": isoDuration,
+  "contentUrl": `https://www.youtube.com/watch?v=${youtubeId}`,
+  "embedUrl": `https://www.youtube.com/embed/${youtubeId}`,
+  "publisher": {
+    "@type": "Organization",
+    "name": "FamilyWorkouts",
+    "logo": {
+      "@type": "ImageObject",
+      "url": `${siteUrl}/images/logo.png`
+    }
+  },
+  "isFamilyFriendly": true,
+  "genre": category,
+  "audience": {
+    "@type": "PeopleAudience",
+    "audienceType": "Families"
+  }
+} : null;
+
+// Combine all schemas
+const schemas = [howToSchema, exerciseSchema, videoSchema].filter(Boolean);
+---
+
+{schemas.map(schema => (
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+))}
