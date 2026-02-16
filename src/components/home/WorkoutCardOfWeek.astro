@@ -1,0 +1,135 @@
+---
+/**
+ * Workout Card of the Week — a featured Family Workout Card™ with
+ * printable download emphasis. Rotates weekly.
+ */
+
+const weeklyCards = [
+  {
+    title: "Treasure Hunt Relay",
+    funHook: "Hide treasures around the house — whoever finds the most wins the crown!",
+    time: 8,
+    goal: "cardio + coordination",
+    goalIcon: "🏴‍☠️",
+    ages: "All ages (2+)",
+    space: "Any room",
+    intensity: { easy: "Walk to find treasures", medium: "Race to find treasures", spicy: "Timed + exercises at each treasure!" },
+    steps: [
+      "One person hides 10 small objects (socks, toys, etc.)",
+      "Set a 3-minute timer",
+      "Everyone hunts!",
+      "At each find: do 3 jumping jacks",
+      "Count treasures — crown the champion",
+      "Switch hider and go again!"
+    ],
+    familyRole: "Rotate the hider each round",
+    printable: true
+  },
+  {
+    title: "Kitchen Band Workout",
+    funHook: "Grab pots, wooden spoons, and make music while you move!",
+    time: 5,
+    goal: "coordination + cardio",
+    goalIcon: "🎵",
+    ages: "Toddlers to Adults",
+    space: "Kitchen / Living room",
+    intensity: { easy: "Gentle tapping & swaying", medium: "March & drum together", spicy: "Full parade around the house!" },
+    steps: [
+      "Everyone grabs a 'drum' (pot, container, etc.)",
+      "March in place for 30 seconds while drumming",
+      "Stop! Freeze pose!",
+      "New rhythm — new movement (skip, hop, sway)",
+      "Big finale — drum solo + dance!",
+      "Take a bow!"
+    ],
+    familyRole: "Toddlers bang freely, older kids follow rhythm",
+    printable: true
+  },
+  {
+    title: "Cloud Watching Stretch",
+    funHook: "Lie down, watch clouds, and stretch into the shapes you see!",
+    time: 8,
+    goal: "mobility + calm",
+    goalIcon: "☁️",
+    ages: "All ages",
+    space: "Outdoor / by a window",
+    intensity: { easy: "Gentle stretches", medium: "Hold poses longer", spicy: "Add strength holds" },
+    steps: [
+      "Everyone lies on their back",
+      "Look at the sky (or ceiling — use imagination!)",
+      "Someone spots a shape — everyone stretches into it",
+      "Hold for 10 seconds",
+      "Next person spots a shape",
+      "End with 1 minute of deep breathing together"
+    ],
+    familyRole: "Everyone takes turns spotting shapes",
+    printable: true
+  }
+];
+
+// Pick card based on week of the year
+const now = new Date();
+const startOfYear = new Date(now.getFullYear(), 0, 1);
+const weekNum = Math.ceil((((now.getTime() - startOfYear.getTime()) / 86400000) + startOfYear.getDay() + 1) / 7);
+const card = weeklyCards[weekNum % weeklyCards.length];
+---
+
+<section class="bg-white rounded-3xl shadow-lg overflow-hidden border-2 border-sunshine/30">
+  <!-- Header bar -->
+  <div class="bg-gradient-sunrise px-6 py-3 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <span class="text-xl">⭐</span>
+      <span class="font-bold text-navy text-sm uppercase tracking-wide">Card of the Week</span>
+    </div>
+    {card.printable && (
+      <button onclick="window.print()" class="inline-flex items-center gap-1 text-xs font-semibold text-navy bg-white/70 hover:bg-white px-3 py-1 rounded-full transition-colors">
+        🖨️ Print Card
+      </button>
+    )}
+  </div>
+
+  <div class="p-6 lg:p-8">
+    <!-- Title & Meta -->
+    <div class="flex items-start justify-between gap-4 mb-4">
+      <div>
+        <span class="text-4xl mb-2 block">{card.goalIcon}</span>
+        <h3 class="text-xl lg:text-2xl font-extrabold text-navy">{card.title}</h3>
+      </div>
+      <div class="text-right flex-shrink-0">
+        <div class="bg-coral/10 text-coral font-bold text-sm px-3 py-1 rounded-full mb-1">{card.time} min</div>
+        <div class="text-xs text-soft-gray">{card.ages}</div>
+      </div>
+    </div>
+
+    <!-- Fun Hook -->
+    <div class="bg-sunshine/10 rounded-2xl p-4 mb-5">
+      <p class="text-navy font-semibold italic">"{card.funHook}"</p>
+    </div>
+
+    <!-- Steps (compact) -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-5">
+      {card.steps.map((step, i) => (
+        <div class="flex items-start gap-2 bg-cloud rounded-xl p-2.5">
+          <span class="flex-shrink-0 w-5 h-5 bg-coral text-white text-xs font-bold rounded-full flex items-center justify-center mt-0.5">{i + 1}</span>
+          <span class="text-xs text-navy leading-snug">{step}</span>
+        </div>
+      ))}
+    </div>
+
+    <!-- Intensity Row -->
+    <div class="grid grid-cols-3 gap-2">
+      <div class="badge-easy rounded-xl px-3 py-2 text-center">
+        <div class="font-bold text-xs">Easy</div>
+        <div class="text-xs opacity-80">{card.intensity.easy}</div>
+      </div>
+      <div class="badge-medium rounded-xl px-3 py-2 text-center">
+        <div class="font-bold text-xs">Medium</div>
+        <div class="text-xs opacity-80">{card.intensity.medium}</div>
+      </div>
+      <div class="badge-spicy rounded-xl px-3 py-2 text-center">
+        <div class="font-bold text-xs">Spicy</div>
+        <div class="text-xs opacity-80">{card.intensity.spicy}</div>
+      </div>
+    </div>
+  </div>
+</section>

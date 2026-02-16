@@ -5,6 +5,11 @@ import Footer from '../components/global/Footer.astro';
 import MobileNav from '../components/global/MobileNav.astro';
 import WorkoutCard from '../components/workout/WorkoutCard.astro';
 import CategoryCard from '../components/workout/CategoryCard.astro';
+import PressPlayGenerator from '../components/workout/PressPlayGenerator.astro';
+import FamilyMission from '../components/home/FamilyMission.astro';
+import NewParentCorner from '../components/home/NewParentCorner.astro';
+import WorkoutCardOfWeek from '../components/home/WorkoutCardOfWeek.astro';
+import StreakCounter from '../components/fun/StreakCounter.astro';
 import OrganizationSchema from '../components/seo/OrganizationSchema.astro';
 import SchemaMarkup from '../components/seo/SchemaMarkup.astro';
 
@@ -81,48 +86,27 @@ const featuredWorkouts = [
   }
 ];
 
-const benefits = [
-  {
-    icon: "❤️",
-    title: "Stronger Family Bonds",
-    description: "Exercising together creates shared experiences and lasting memories that strengthen relationships."
-  },
-  {
-    icon: "🧠",
-    title: "Healthier Kids",
-    description: "Children who exercise with family are more likely to develop lifelong healthy habits."
-  },
-  {
-    icon: "💪",
-    title: "Lead by Example",
-    description: "When kids see parents prioritizing fitness, they learn that health matters."
-  },
-  {
-    icon: "😊",
-    title: "Better Mental Health",
-    description: "Family exercise reduces stress, anxiety, and improves mood for everyone."
-  },
-  {
-    icon: "📱",
-    title: "Less Screen Time",
-    description: "Replace passive screen time with active family fun that everyone enjoys."
-  },
-  {
-    icon: "🌍",
-    title: "Free & Accessible",
-    description: "No gym membership, no expensive equipment. Just you and your family, anywhere."
-  }
+const pillars = [
+  { icon: "⚡", title: "Press Play", description: "Instant workouts. Zero planning.", color: "from-coral/20 to-coral/5" },
+  { icon: "🎮", title: "Game-Workouts", description: "Games disguised as fitness.", color: "from-ocean/20 to-ocean/5" },
+  { icon: "👶", title: "New Parents", description: "Postpartum-safe movement.", color: "from-purple/20 to-purple/5" },
+  { icon: "🏠", title: "Tiny Space", description: "No equipment. Any room.", color: "from-sunshine/20 to-sunshine/5" },
+  { icon: "👨‍👩‍👧‍👦", title: "Mixed Ages", description: "Same game, every age.", color: "from-forest/20 to-forest/5" },
+  { icon: "🌍", title: "Community", description: "Families worldwide.", color: "from-coral/20 to-coral/5" },
+  { icon: "📚", title: "Learn", description: "Short, friendly education.", color: "from-ocean/20 to-ocean/5" },
 ];
 
-const stats = [
-  { value: "1M+", label: "Families Active" },
-  { value: "500+", label: "Free Workouts" },
-  { value: "7", label: "Languages" },
-  { value: "150+", label: "Countries" }
+const cultureValues = [
+  { icon: "❤️", text: "Show up. Laugh. Repeat." },
+  { icon: "🚫", text: "No body shaming" },
+  { icon: "🚫", text: "No parenting shaming" },
+  { icon: "🏆", text: "Celebrate tiny wins" },
+  { icon: "🌍", text: "Inclusive & global" },
+  { icon: "🆓", text: "Free forever" },
 ];
 
-const pageTitle = "Family Workouts: Free Exercise Videos for All Ages | FamilyWorkouts.com";
-const pageDescription = "Free family workout videos for all ages. Dance, yoga, HIIT & more. No equipment needed. Exercise together—toddlers to grandparents!";
+const pageTitle = "FamilyWorkouts: Free Family Movement Games for All Ages";
+const pageDescription = "Move together. Laugh together. Get strong together. Free, fun, 3-12 minute family workouts designed for real life. No equipment, all ages, 7 languages.";
 ---
 
 <BaseLayout
@@ -142,76 +126,138 @@ const pageDescription = "Free family workout videos for all ages. Dance, yoga, H
 
   <Header slot="header" currentPath="/" />
 
-  <!-- Hero Section -->
+  <!-- ============================================ -->
+  <!-- HERO — "Nintendo × Duolingo × family club"  -->
+  <!-- ============================================ -->
   <section class="hero-section relative overflow-hidden">
-    <!-- Background Pattern -->
-    <div class="absolute inset-0 opacity-30">
-      <div class="absolute top-20 left-10 w-32 h-32 bg-coral/30 rounded-full blur-3xl"></div>
-      <div class="absolute top-40 right-20 w-48 h-48 bg-ocean/30 rounded-full blur-3xl"></div>
-      <div class="absolute bottom-20 left-1/3 w-40 h-40 bg-sunshine/40 rounded-full blur-3xl"></div>
+    <!-- Animated Background Blobs -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute top-10 left-10 w-40 h-40 bg-coral/20 rounded-full blur-3xl animate-float"></div>
+      <div class="absolute top-32 right-16 w-56 h-56 bg-ocean/20 rounded-full blur-3xl animate-float" style="animation-delay: 1s"></div>
+      <div class="absolute bottom-24 left-1/4 w-48 h-48 bg-sunshine/30 rounded-full blur-3xl animate-float" style="animation-delay: 2s"></div>
+      <div class="absolute bottom-10 right-1/3 w-36 h-36 bg-purple/15 rounded-full blur-3xl animate-float" style="animation-delay: 0.5s"></div>
     </div>
 
     <div class="section-container relative z-10 py-16 lg:py-24">
       <div class="text-center max-w-4xl mx-auto">
-        <!-- Badge -->
-        <div class="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full mb-6 shadow-sm">
-          <span class="text-lg">🎉</span>
-          <span class="text-sm font-medium text-navy">100% Free • No Equipment • All Ages</span>
+        <!-- Streak Counter -->
+        <div class="mb-6">
+          <StreakCounter />
         </div>
 
-        <!-- Main Heading -->
-        <h1 class="text-hero font-extrabold text-navy mb-6 leading-tight">
-          Free <span class="text-gradient">Family Workouts</span>
-          <br class="hidden sm:block" />
-          <span class="text-3xl sm:text-4xl lg:text-5xl">for Every Generation</span>
+        <!-- Main Heading (from README) -->
+        <h1 class="text-hero font-extrabold text-navy mb-4 leading-tight">
+          Move together.<br/>
+          <span class="text-gradient">Laugh together.</span><br/>
+          Get strong together.
         </h1>
 
-        <!-- Subheading -->
+        <!-- Subheading (from README) -->
         <p class="text-lg sm:text-xl text-soft-gray mb-8 max-w-2xl mx-auto">
-          Exercise together — toddlers to grandparents. The world's free family fitness platform with 500+ workout videos in 7 languages. No subscription required.
+          Free, fun, 3–12 minute family workouts — designed for real life.
+          <span class="block mt-1 text-base">No login. No subscription. No equipment. Just your family.</span>
         </p>
 
-        <!-- CTA Buttons -->
-        <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-          <a href="/workouts/" class="btn-primary text-lg px-8 py-4">
-            <svg class="w-6 h-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        <!-- CTA Buttons (from README: 3 specific CTAs) -->
+        <div class="flex flex-col sm:flex-row gap-3 justify-center mb-10">
+          <a href="#press-play" class="btn-play text-lg">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z"/>
             </svg>
-            Start Your First Workout
+            Press Play (3 Minutes)
           </a>
-          <a href="/guides/getting-started/" class="btn-secondary text-lg px-8 py-4">
-            Learn More
+          <a href="/ages/" class="btn-secondary text-lg px-6 py-3.5">
+            Find Workouts by Age
+          </a>
+          <a href="/challenges/" class="btn-secondary text-lg px-6 py-3.5">
+            Join a Global Mission
           </a>
         </div>
 
-        <!-- Trust Indicators -->
-        <div class="flex flex-wrap justify-center gap-8 text-center">
-          {stats.map((stat) => (
-            <div>
-              <div class="text-2xl sm:text-3xl font-bold text-coral">{stat.value}</div>
-              <div class="text-sm text-soft-gray">{stat.label}</div>
-            </div>
-          ))}
+        <!-- Trust Badge -->
+        <div class="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-5 py-2.5 rounded-full shadow-sm">
+          <span class="text-lg">🎉</span>
+          <span class="text-sm font-medium text-navy">100% Free  •  No Equipment  •  All Ages  •  7 Languages</span>
         </div>
       </div>
     </div>
 
     <!-- Scroll Indicator -->
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-      <svg class="w-6 h-6 text-soft-gray" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce">
+      <svg class="w-6 h-6 text-soft-gray/50" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
       </svg>
     </div>
   </section>
 
-  <!-- Featured Workouts Section -->
+  <!-- ============================================ -->
+  <!-- PRESS PLAY MODULE — The Centerpiece          -->
+  <!-- ============================================ -->
   <section class="py-16 lg:py-20 bg-white">
+    <div class="section-container">
+      <PressPlayGenerator />
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- 7 PILLARS — Quick Access Strip               -->
+  <!-- ============================================ -->
+  <section class="py-10 bg-cloud overflow-hidden">
+    <div class="section-container">
+      <div class="flex gap-3 overflow-x-auto hide-scrollbar pb-2 stagger-children">
+        {pillars.map((pillar) => (
+          <div class:list={[
+            "flex-shrink-0 bg-gradient-to-br rounded-2xl p-4 w-36 text-center hover:shadow-md hover:-translate-y-1 transition-all duration-200 cursor-default animate-slide-up opacity-0",
+            pillar.color
+          ]}>
+            <span class="text-3xl block mb-2">{pillar.icon}</span>
+            <div class="font-bold text-navy text-sm mb-0.5">{pillar.title}</div>
+            <div class="text-xs text-soft-gray">{pillar.description}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- TODAY'S FAMILY MISSION                       -->
+  <!-- ============================================ -->
+  <section class="py-12 lg:py-16 bg-white">
+    <div class="section-container max-w-3xl">
+      <FamilyMission />
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- WORKOUT CARD OF THE WEEK                     -->
+  <!-- ============================================ -->
+  <section class="py-12 lg:py-16 bg-cloud">
+    <div class="section-container max-w-3xl">
+      <WorkoutCardOfWeek />
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- NEW PARENT CORNER                            -->
+  <!-- ============================================ -->
+  <section class="py-12 lg:py-16 bg-white">
+    <div class="section-container max-w-4xl">
+      <NewParentCorner />
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- FEATURED WORKOUTS                            -->
+  <!-- ============================================ -->
+  <section class="py-14 lg:py-20 bg-cloud">
     <div class="section-container">
       <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
         <div>
-          <h2 class="text-2xl lg:text-3xl font-bold text-navy mb-2">Featured Workouts</h2>
-          <p class="text-soft-gray">Hand-picked workouts perfect for the whole family</p>
+          <div class="inline-flex items-center gap-2 text-coral font-bold text-sm mb-2">
+            <span>⚡</span> Instant Play
+          </div>
+          <h2 class="text-2xl lg:text-3xl font-extrabold text-navy mb-1">Featured Workouts</h2>
+          <p class="text-soft-gray">Hand-picked games the whole family will love</p>
         </div>
         <a
           href="/workouts/"
@@ -232,12 +278,14 @@ const pageDescription = "Free family workout videos for all ages. Dance, yoga, H
     </div>
   </section>
 
-  <!-- Categories Section -->
-  <section class="py-16 lg:py-20 bg-cloud">
+  <!-- ============================================ -->
+  <!-- BROWSE BY CATEGORY                           -->
+  <!-- ============================================ -->
+  <section class="py-14 lg:py-20 bg-white">
     <div class="section-container">
-      <div class="text-center mb-12">
-        <h2 class="text-2xl lg:text-3xl font-bold text-navy mb-3">Explore by Category</h2>
-        <p class="text-soft-gray max-w-2xl mx-auto">Find the perfect workout style for your family</p>
+      <div class="text-center mb-10">
+        <h2 class="text-2xl lg:text-3xl font-extrabold text-navy mb-2">The Game-Workout Library</h2>
+        <p class="text-soft-gray max-w-2xl mx-auto">Kids don't want workouts. They want games. Every game here is fitness in disguise.</p>
       </div>
 
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
@@ -248,42 +296,120 @@ const pageDescription = "Free family workout videos for all ages. Dance, yoga, H
     </div>
   </section>
 
-  <!-- Age Groups Section -->
-  <section class="py-16 lg:py-20 bg-white">
+  <!-- ============================================ -->
+  <!-- MIXED-AGE SCALING — The Core Innovation      -->
+  <!-- ============================================ -->
+  <section class="py-14 lg:py-20 bg-gradient-to-br from-ocean/5 via-purple/5 to-coral/5">
     <div class="section-container">
-      <div class="text-center mb-12">
-        <h2 class="text-2xl lg:text-3xl font-bold text-navy mb-3">Workouts by Age</h2>
-        <p class="text-soft-gray max-w-2xl mx-auto">Activities designed for every stage of life</p>
+      <div class="text-center mb-10">
+        <div class="inline-flex items-center gap-2 bg-ocean/10 text-ocean font-bold text-sm px-4 py-1.5 rounded-full mb-4">
+          <span>🎯</span> The Core Innovation
+        </div>
+        <h2 class="text-2xl lg:text-3xl font-extrabold text-navy mb-2">One Game. Every Age. Same Room.</h2>
+        <p class="text-soft-gray max-w-2xl mx-auto">Every workout includes lanes for toddlers, kids, teens, adults, and low-impact — so the whole family plays the same game at their own intensity.</p>
       </div>
 
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
         {ageGroups.map((age) => (
           <a
             href={`/ages/${age.slug}/`}
-            class="group bg-gradient-to-br from-ocean/10 to-ocean/5 p-6 rounded-2xl border-2 border-ocean/20 hover:border-ocean/40 hover:shadow-lg transition-all text-center"
+            class="group bg-white p-5 rounded-2xl border-2 border-ocean/15 hover:border-ocean/40 hover:shadow-lg transition-all text-center hover:-translate-y-1"
           >
-            <div class="text-4xl mb-3">{age.icon}</div>
-            <h3 class="font-bold text-navy mb-1">{age.name}</h3>
+            <div class="text-4xl mb-3 group-hover:animate-wiggle">{age.icon}</div>
+            <h3 class="font-bold text-navy mb-1 text-sm">{age.name}</h3>
             <p class="text-xs text-soft-gray">{age.ageRange}</p>
+          </a>
+        ))}
+      </div>
+
+      <!-- Visual: Lane explanation -->
+      <div class="mt-10 bg-white rounded-2xl p-6 max-w-2xl mx-auto shadow-sm">
+        <h3 class="font-bold text-navy text-center mb-4">How Mixed-Age Scaling Works</h3>
+        <div class="flex items-center justify-between gap-2">
+          <div class="text-center flex-1">
+            <div class="text-2xl mb-1">👶</div>
+            <div class="text-xs font-bold text-forest">Easy</div>
+            <div class="text-xs text-soft-gray">Walk like animals</div>
+          </div>
+          <div class="text-soft-gray text-lg">→</div>
+          <div class="text-center flex-1">
+            <div class="text-2xl mb-1">🧒</div>
+            <div class="text-xs font-bold text-ocean">Medium</div>
+            <div class="text-xs text-soft-gray">Run + add sounds</div>
+          </div>
+          <div class="text-soft-gray text-lg">→</div>
+          <div class="text-center flex-1">
+            <div class="text-2xl mb-1">🧑</div>
+            <div class="text-xs font-bold text-amber-600">Spicy</div>
+            <div class="text-xs text-soft-gray">Race + burpees!</div>
+          </div>
+          <div class="text-soft-gray text-lg">→</div>
+          <div class="text-center flex-1">
+            <div class="text-2xl mb-1">👴</div>
+            <div class="text-xs font-bold text-purple">Chair</div>
+            <div class="text-xs text-soft-gray">Seated version</div>
+          </div>
+        </div>
+        <p class="text-center text-xs text-soft-gray mt-4 italic">Same game. Different intensity. Everyone plays together.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- PRINTABLE PACKS (Tiny Space + No Equipment)  -->
+  <!-- ============================================ -->
+  <section class="py-14 lg:py-20 bg-white">
+    <div class="section-container">
+      <div class="text-center mb-10">
+        <h2 class="text-2xl lg:text-3xl font-extrabold text-navy mb-2">Printable Packs</h2>
+        <p class="text-soft-gray max-w-2xl mx-auto">Download, print, stick on the fridge. No screen required.</p>
+      </div>
+
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {[
+          { title: "Rainy Day Pack", emoji: "🌧️", desc: "10 indoor games for stuck-inside days", color: "from-ocean/15 to-ocean/5 border-ocean/20" },
+          { title: "Tiny Apartment Pack", emoji: "🏠", desc: "Low-noise, small-space workouts", color: "from-purple/15 to-purple/5 border-purple/20" },
+          { title: "Vacation Pack", emoji: "✈️", desc: "Hotel room & travel-friendly moves", color: "from-sunshine/20 to-sunshine/5 border-sunshine/30" },
+          { title: "Grandparents Visiting", emoji: "👴", desc: "All-ages games grandparents will love", color: "from-coral/15 to-coral/5 border-coral/20" },
+        ].map((pack) => (
+          <a href="/workouts/" class:list={[
+            "block bg-gradient-to-br border-2 rounded-2xl p-5 text-center transition-all hover:-translate-y-1 hover:shadow-lg",
+            pack.color
+          ]}>
+            <span class="text-4xl block mb-3">{pack.emoji}</span>
+            <h3 class="font-bold text-navy text-sm mb-1">{pack.title}</h3>
+            <p class="text-xs text-soft-gray">{pack.desc}</p>
+            <div class="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-coral">
+              🖨️ Download Free
+            </div>
           </a>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- Why Family Workouts Section -->
-  <section class="py-16 lg:py-20 bg-gradient-to-br from-coral/5 via-sunshine/5 to-ocean/5">
+  <!-- ============================================ -->
+  <!-- WHY FAMILIES MOVE TOGETHER                   -->
+  <!-- ============================================ -->
+  <section class="py-14 lg:py-20 bg-gradient-to-br from-coral/5 via-sunshine/5 to-ocean/5">
     <div class="section-container">
-      <div class="text-center mb-12">
-        <h2 class="text-2xl lg:text-3xl font-bold text-navy mb-3">Why Exercise Together?</h2>
+      <div class="text-center mb-10">
+        <h2 class="text-2xl lg:text-3xl font-extrabold text-navy mb-2">Why Move Together?</h2>
         <p class="text-soft-gray max-w-2xl mx-auto">Families who move together, grow together</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {benefits.map((benefit) => (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {[
+          { icon: "🧠", title: "Builds Lifelong Habits", description: "Kids who exercise with family are far more likely to stay active for life." },
+          { icon: "❤️", title: "Stronger Bonds", description: "Shared movement creates memories and connection no screen can replace." },
+          { icon: "😊", title: "Better Mental Health", description: "Family exercise reduces stress and boosts mood — for parents AND kids." },
+          { icon: "⏱️", title: "Just 3 Minutes Works", description: "Short, daily, repeatable. Like brushing teeth — small habits add up." },
+          { icon: "📱", title: "Replaces Screen Time", description: "Trade passive scrolling for active laughing. The whole family wins." },
+          { icon: "🌍", title: "Free & Global", description: "No gym. No equipment. No subscription. Works in every home on earth." },
+        ].map((benefit) => (
           <div class="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-            <div class="text-3xl mb-4">{benefit.icon}</div>
-            <h3 class="font-bold text-navy mb-2">{benefit.title}</h3>
+            <div class="text-3xl mb-3">{benefit.icon}</div>
+            <h3 class="font-bold text-navy mb-1.5">{benefit.title}</h3>
             <p class="text-soft-gray text-sm">{benefit.description}</p>
           </div>
         ))}
@@ -291,18 +417,53 @@ const pageDescription = "Free family workout videos for all ages. Dance, yoga, H
     </div>
   </section>
 
-  <!-- CTA Section -->
-  <section class="py-16 lg:py-24 bg-navy text-white">
+  <!-- ============================================ -->
+  <!-- COMMUNITY CULTURE                            -->
+  <!-- ============================================ -->
+  <section class="py-14 lg:py-20 bg-white">
     <div class="section-container text-center">
-      <h2 class="text-2xl lg:text-4xl font-bold mb-4">Ready to Get Your Family Moving?</h2>
-      <p class="text-gray-300 mb-8 max-w-2xl mx-auto">
-        Join millions of families worldwide who are building healthier habits together. It's free, it's fun, and it takes just 10 minutes a day.
+      <h2 class="text-2xl lg:text-3xl font-extrabold text-navy mb-3">Our Culture</h2>
+      <blockquote class="text-xl lg:text-2xl font-bold text-gradient mb-8 max-w-lg mx-auto">
+        "Show up. Laugh. Repeat."
+      </blockquote>
+
+      <div class="flex flex-wrap justify-center gap-3 max-w-2xl mx-auto">
+        {cultureValues.map((value) => (
+          <div class="inline-flex items-center gap-2 bg-cloud px-4 py-2.5 rounded-full">
+            <span class="text-lg">{value.icon}</span>
+            <span class="text-sm font-medium text-navy">{value.text}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================ -->
+  <!-- FINAL CTA                                    -->
+  <!-- ============================================ -->
+  <section class="py-16 lg:py-24 bg-navy text-white relative overflow-hidden">
+    <!-- Background decoration -->
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute top-10 left-10 w-32 h-32 bg-coral/10 rounded-full blur-3xl"></div>
+      <div class="absolute bottom-10 right-10 w-48 h-48 bg-ocean/10 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="section-container text-center relative z-10">
+      <span class="text-5xl block mb-4">🚀</span>
+      <h2 class="text-2xl lg:text-4xl font-extrabold mb-3">
+        Families Don't Need More Workouts.
+      </h2>
+      <p class="text-gray-300 mb-2 max-w-xl mx-auto text-lg">
+        They need a way to move together that actually fits real life.
       </p>
-      <a href="/workouts/" class="btn-primary text-lg px-8 py-4 inline-flex">
-        Start Your Free Workout
-        <svg class="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+      <p class="text-gray-400 mb-8 max-w-xl mx-auto">
+        FamilyWorkouts.com builds that way. Free. Fun. Simple. Global.
+      </p>
+      <a href="#press-play" class="btn-play text-lg inline-flex">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M8 5v14l11-7z"/>
         </svg>
+        Press Play Now
       </a>
     </div>
   </section>

@@ -1,0 +1,517 @@
+---
+/**
+ * The Press Play Generator — the crown jewel of FamilyWorkouts.com
+ * Users choose time, space, and ages → instantly receive a workout card.
+ * No login. No planning. No scrolling. Solves decision fatigue.
+ */
+
+import categories from '../../data/categories.json';
+
+// Workout card bank — each card follows the Family Workout Card™ format
+const workoutCards = [
+  {
+    id: 1,
+    title: "Animal Parade",
+    funHook: "Stomp like an elephant, leap like a frog, slither like a snake!",
+    time: 3,
+    space: "tiny",
+    ages: ["toddler", "kids", "mixed"],
+    intensity: { easy: "Walk like the animals", medium: "Move fast + add sounds", spicy: "Race between animals!" },
+    goal: "coordination",
+    familyRole: "Kid leads — they pick the animal!",
+    safetyCue: "Clear the floor of toys first. Stop if dizzy.",
+    steps: ["Pick an animal", "Move like that animal for 30 seconds", "Freeze!", "Next person picks", "Repeat 5 rounds"],
+    mods: { chair: "Seated arm movements only", quiet: "Tiptoe animals", noJump: "No jumping — crawl & stretch" }
+  },
+  {
+    id: 2,
+    title: "Freeze Dance Blast",
+    funHook: "Dance like crazy, then FREEZE when the music stops!",
+    time: 5,
+    space: "tiny",
+    ages: ["toddler", "kids", "teens", "mixed"],
+    intensity: { easy: "Gentle swaying", medium: "Full-body dance", spicy: "Add jumping jacks between freezes!" },
+    goal: "cardio",
+    familyRole: "Rotate who controls the music",
+    safetyCue: "Socks off on slippery floors. Watch for furniture.",
+    steps: ["Play any music", "Everyone dances", "Pause the music — FREEZE!", "Anyone who moves does 3 silly squats", "Resume!", "Play 5 rounds"],
+    mods: { chair: "Seated dance — wave arms, bob head", quiet: "Whisper dance — no stomping", noJump: "Dance with feet on floor" }
+  },
+  {
+    id: 3,
+    title: "Floor Is Lava Fitness",
+    funHook: "The floor is LAVA! Jump from cushion to cushion to survive!",
+    time: 5,
+    space: "normal",
+    ages: ["kids", "teens", "mixed"],
+    intensity: { easy: "Step between safe zones", medium: "Hop between safe zones", spicy: "One-leg hops + timed!" },
+    goal: "balance",
+    familyRole: "Parent sets up, kids navigate",
+    safetyCue: "Use non-slip surfaces. Cushions on carpet only.",
+    steps: ["Place cushions/towels as 'safe zones'", "Start on one end of the room", "Jump/step between safe zones", "If you touch the floor — 5 arm circles!", "Rearrange and go again", "3 rounds"],
+    mods: { chair: "Seated — throw soft toys onto safe zones", quiet: "Tiptoe challenge — silent lava", noJump: "Step and stretch between zones" }
+  },
+  {
+    id: 4,
+    title: "Simon Says Workout",
+    funHook: "Simon says... do 5 jumping jacks! (But only if Simon says!)",
+    time: 3,
+    space: "tiny",
+    ages: ["toddler", "kids", "mixed"],
+    intensity: { easy: "Gentle stretches", medium: "Add squats & lunges", spicy: "Speed round + burpees!" },
+    goal: "strength",
+    familyRole: "Rotate who plays Simon",
+    safetyCue: "Start slow. No running in small spaces.",
+    steps: ["One person is Simon", "Simon gives movement commands", "Only do it if 'Simon says'", "If you move without Simon saying — do a silly dance!", "Switch Simon every 2 minutes"],
+    mods: { chair: "All seated movements", quiet: "Whisper Simon", noJump: "Floor-based stretches only" }
+  },
+  {
+    id: 5,
+    title: "Family Yoga Story",
+    funHook: "Travel through a jungle using only yoga poses!",
+    time: 8,
+    space: "tiny",
+    ages: ["toddler", "kids", "teens", "mixed"],
+    intensity: { easy: "Hold each pose gently", medium: "Flow between poses", spicy: "Add balance challenges" },
+    goal: "mobility",
+    familyRole: "Parent narrates the story, family does poses",
+    safetyCue: "Use a soft surface. Never force a stretch.",
+    steps: ["Start in Mountain Pose — you're at the jungle entrance", "Tree Pose — tall trees everywhere!", "Cat/Cow — a friendly jungle cat", "Cobra — a snake in the grass!", "Warrior — brave explorers!", "Child's Pose — rest under a big leaf", "Repeat the journey"],
+    mods: { chair: "Seated stretches for each pose", quiet: "Whisper the story", noJump: "All poses ground-level" }
+  },
+  {
+    id: 6,
+    title: "Obstacle Course Dash",
+    funHook: "Build a crazy obstacle course from household stuff!",
+    time: 12,
+    space: "normal",
+    ages: ["kids", "teens", "mixed"],
+    intensity: { easy: "Walk the course", medium: "Jog + time yourself", spicy: "Sprint + add challenges at each station!" },
+    goal: "cardio",
+    familyRole: "Everyone builds one station",
+    safetyCue: "Check all obstacles are stable. No sharp edges.",
+    steps: ["Each person builds 1-2 stations (pillows to hop, chairs to crawl under, etc.)", "Everyone walks through to learn the course", "Ready? GO!", "Time each person", "Beat your own time on round 2", "Celebrate everyone!"],
+    mods: { chair: "Tabletop course with hand obstacles", quiet: "Slow-motion ninja course", noJump: "All crawling and stepping" }
+  },
+  {
+    id: 7,
+    title: "Dance-Off Challenge",
+    funHook: "Take turns showing your best moves — family votes for the silliest!",
+    time: 5,
+    space: "tiny",
+    ages: ["kids", "teens", "mixed"],
+    intensity: { easy: "Gentle grooves", medium: "Full dance routines", spicy: "Non-stop for 60 seconds each!" },
+    goal: "cardio",
+    familyRole: "Everyone performs, everyone judges (nicely!)",
+    safetyCue: "Clear the dance floor. No shoes on slippery surfaces.",
+    steps: ["Pick a song everyone likes", "Each person gets 30-60 seconds to dance solo", "Everyone else cheers and rates (silliest wins!)", "Group dance finale — everyone dances together", "Bow to your audience!"],
+    mods: { chair: "Seated dance-off — upper body only", quiet: "Mime dance — no music, just moves", noJump: "Smooth floor moves only" }
+  },
+  {
+    id: 8,
+    title: "Superhero Training Camp",
+    funHook: "Train like a superhero! Each exercise gives you a new power!",
+    time: 8,
+    space: "normal",
+    ages: ["toddler", "kids", "mixed"],
+    intensity: { easy: "3 reps of each", medium: "5 reps of each", spicy: "8 reps + superspeed!" },
+    goal: "strength",
+    familyRole: "Kid picks their superhero name, parent coaches",
+    safetyCue: "Warm up first. Drink water between rounds.",
+    steps: ["Pick your superhero name!", "Super Squats — power legs!", "Power Punches — strong arms! (punch the air)", "Hero Hops — leap tall buildings!", "Shield Hold — plank for 10 seconds", "Victory Pose — flex and celebrate!", "Repeat your training 2x"],
+    mods: { chair: "Seated punches and arm circles", quiet: "Stealth hero — silent training", noJump: "All strength, no jumps" }
+  },
+  {
+    id: 9,
+    title: "Scavenger Hunt Workout",
+    funHook: "Find something blue... then do 5 jumping jacks!",
+    time: 8,
+    space: "normal",
+    ages: ["toddler", "kids", "teens", "mixed"],
+    intensity: { easy: "Walk + gentle exercise", medium: "Jog + moderate exercise", spicy: "Sprint + intense exercise!" },
+    goal: "cardio",
+    familyRole: "Take turns calling out items to find",
+    safetyCue: "Watch where you're running. No climbing furniture.",
+    steps: ["Caller says: 'Find something [color/shape/texture]!'", "Everyone races to find it", "First one back does a victory move", "Everyone else does 5 of an exercise", "Next person calls!", "Play until everyone has called 3 times"],
+    mods: { chair: "Point to items you can see — seated exercises", quiet: "Walking-only hunt", noJump: "Stretches instead of jumps" }
+  },
+  {
+    id: 10,
+    title: "Balloon Keepie-Uppie",
+    funHook: "Don't let the balloon touch the ground! Use any body part!",
+    time: 3,
+    space: "tiny",
+    ages: ["toddler", "kids", "teens", "mixed"],
+    intensity: { easy: "Hands only, one balloon", medium: "Any body part, one balloon", spicy: "Add more balloons!" },
+    goal: "coordination",
+    familyRole: "Everyone plays together — teamwork!",
+    safetyCue: "Pop balloons near very young children carefully. Watch for furniture.",
+    steps: ["Blow up 1-3 balloons", "Keep them in the air!", "Only use the body part someone calls out", "If it touches the ground — everyone does 3 squats", "Keep going until the giggles take over"],
+    mods: { chair: "Seated — use hands and head", quiet: "Gentle taps only", noJump: "Feet stay on the ground" }
+  },
+  {
+    id: 11,
+    title: "Pillow Fight Fitness",
+    funHook: "Dodge, block, and throw in this safe pillow battle!",
+    time: 5,
+    space: "normal",
+    ages: ["kids", "teens", "mixed"],
+    intensity: { easy: "Gentle throws", medium: "Active dodging", spicy: "Full pillow war + exercises!" },
+    goal: "cardio",
+    familyRole: "Teams: kids vs parents (or mix it up!)",
+    safetyCue: "Soft pillows only. No hitting faces. Clear breakable items.",
+    steps: ["Gather soft pillows/cushions", "Set a boundary for the arena", "Pillow throw + dodge for 1 minute", "Freeze! Everyone does 5 squats", "Resume! Another 1-minute round", "3 rounds total — then group hug!"],
+    mods: { chair: "Seated pillow toss — accuracy game", quiet: "Slow-motion pillow dodge", noJump: "Throw from standing still" }
+  },
+  {
+    id: 12,
+    title: "Mirror Mirror",
+    funHook: "Copy your partner's every move — can you keep up?",
+    time: 3,
+    space: "tiny",
+    ages: ["toddler", "kids", "teens", "mixed"],
+    intensity: { easy: "Slow, simple movements", medium: "Faster, add whole body", spicy: "Speed round + silly moves!" },
+    goal: "coordination",
+    familyRole: "Pair up! Alternate who leads",
+    safetyCue: "Keep movements controlled. Start slow.",
+    steps: ["Face your partner", "Leader does slow movements", "Mirror copies exactly", "Switch leader every 30 seconds", "Round 2: Go faster!", "Round 3: Add silly faces!"],
+    mods: { chair: "Seated mirror — hands and expressions", quiet: "Silent mirror — no talking", noJump: "Upper body only" }
+  },
+];
+
+// Time options from README
+const timeOptions = [
+  { label: "3 min", value: 3, emoji: "⚡" },
+  { label: "5 min", value: 5, emoji: "🎯" },
+  { label: "8 min", value: 8, emoji: "💪" },
+  { label: "12 min", value: 12, emoji: "🔥" },
+];
+
+// Space options from README
+const spaceOptions = [
+  { label: "Tiny", value: "tiny", emoji: "🏠" },
+  { label: "Normal", value: "normal", emoji: "🏡" },
+  { label: "Outdoor", value: "outdoor", emoji: "🌳" },
+];
+
+// Age options from README
+const ageOptions = [
+  { label: "Toddler", value: "toddler", emoji: "👶" },
+  { label: "Kids", value: "kids", emoji: "🧒" },
+  { label: "Teens", value: "teens", emoji: "🧑" },
+  { label: "Mixed", value: "mixed", emoji: "👨‍👩‍👧‍👦" },
+];
+---
+
+<section id="press-play" class="press-play-module max-w-3xl mx-auto">
+  <!-- Header -->
+  <div class="text-center mb-8">
+    <div class="inline-flex items-center gap-2 bg-coral/10 text-coral font-bold text-sm px-4 py-1.5 rounded-full mb-4">
+      <span>🎮</span> The Family Workout Card™
+    </div>
+    <h2 class="text-2xl lg:text-3xl font-extrabold text-navy mb-2">
+      Press Play
+    </h2>
+    <p class="text-soft-gray">Choose your setup. Get a workout card instantly. Zero planning.</p>
+  </div>
+
+  <!-- Selection Controls -->
+  <div class="space-y-6 mb-8" id="play-controls">
+    <!-- Time Row -->
+    <div>
+      <label class="block text-sm font-bold text-navy mb-2 uppercase tracking-wide">Time</label>
+      <div class="flex flex-wrap gap-2" data-group="time">
+        {timeOptions.map((opt, i) => (
+          <button
+            type="button"
+            class:list={[
+              "pill-toggle bg-sunshine/10 text-navy hover:bg-sunshine/30",
+              i === 0 && "active bg-sunshine/40 border-sunshine"
+            ]}
+            data-value={opt.value}
+            aria-pressed={i === 0 ? "true" : "false"}
+          >
+            <span class="mr-1">{opt.emoji}</span> {opt.label}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- Space Row -->
+    <div>
+      <label class="block text-sm font-bold text-navy mb-2 uppercase tracking-wide">Space</label>
+      <div class="flex flex-wrap gap-2" data-group="space">
+        {spaceOptions.map((opt, i) => (
+          <button
+            type="button"
+            class:list={[
+              "pill-toggle bg-ocean/10 text-navy hover:bg-ocean/30",
+              i === 0 && "active bg-ocean/40 border-ocean"
+            ]}
+            data-value={opt.value}
+            aria-pressed={i === 0 ? "true" : "false"}
+          >
+            <span class="mr-1">{opt.emoji}</span> {opt.label}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- Age Row -->
+    <div>
+      <label class="block text-sm font-bold text-navy mb-2 uppercase tracking-wide">Ages</label>
+      <div class="flex flex-wrap gap-2" data-group="ages">
+        {ageOptions.map((opt, i) => (
+          <button
+            type="button"
+            class:list={[
+              "pill-toggle bg-purple/10 text-navy hover:bg-purple/30",
+              i === 3 && "active bg-purple/40 border-purple"
+            ]}
+            data-value={opt.value}
+            aria-pressed={i === 3 ? "true" : "false"}
+          >
+            <span class="mr-1">{opt.emoji}</span> {opt.label}
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Big Play Button -->
+  <div class="text-center mb-8">
+    <button type="button" id="press-play-btn" class="btn-play group">
+      <svg class="w-7 h-7 transition-transform group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+      Press Play
+    </button>
+  </div>
+
+  <!-- Result Card (hidden initially) -->
+  <div id="workout-result" class="hidden">
+    <div class="workout-card-tm animate-pop-in" id="result-card">
+      <!-- Card Header -->
+      <div class="workout-card-tm-header">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-2xl" id="result-goal-icon">🎯</span>
+            <span class="text-xs font-bold uppercase tracking-wide text-soft-gray" id="result-goal">cardio</span>
+          </div>
+          <h3 class="text-xl lg:text-2xl font-extrabold text-navy" id="result-title">Loading...</h3>
+        </div>
+        <div class="flex flex-col items-end gap-1">
+          <span class="bg-coral/10 text-coral font-bold text-sm px-3 py-1 rounded-full" id="result-time">3 min</span>
+          <span class="bg-ocean/10 text-ocean text-xs font-medium px-2 py-0.5 rounded-full" id="result-space">tiny</span>
+        </div>
+      </div>
+
+      <!-- Fun Hook -->
+      <div class="bg-sunshine/10 rounded-2xl p-4 mb-4">
+        <p class="text-navy font-semibold text-lg" id="result-hook">"..."</p>
+      </div>
+
+      <!-- Steps -->
+      <div class="mb-4">
+        <h4 class="font-bold text-sm uppercase tracking-wide text-soft-gray mb-2">How to Play</h4>
+        <ol class="space-y-1.5" id="result-steps">
+          <li class="flex items-start gap-2 text-sm text-navy">
+            <span class="flex-shrink-0 w-5 h-5 bg-coral/20 text-coral text-xs font-bold rounded-full flex items-center justify-center mt-0.5">1</span>
+            <span>Loading...</span>
+          </li>
+        </ol>
+      </div>
+
+      <!-- Intensity Knobs -->
+      <div class="mb-4">
+        <h4 class="font-bold text-sm uppercase tracking-wide text-soft-gray mb-2">Intensity</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2" id="result-intensity">
+          <div class="badge-easy rounded-xl px-3 py-2 text-center">
+            <div class="font-bold text-xs mb-0.5">Easy</div>
+            <div class="text-xs opacity-80">...</div>
+          </div>
+          <div class="badge-medium rounded-xl px-3 py-2 text-center">
+            <div class="font-bold text-xs mb-0.5">Medium</div>
+            <div class="text-xs opacity-80">...</div>
+          </div>
+          <div class="badge-spicy rounded-xl px-3 py-2 text-center">
+            <div class="font-bold text-xs mb-0.5">Spicy</div>
+            <div class="text-xs opacity-80">...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Family Role & Safety -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+        <div class="bg-purple/5 rounded-xl p-3">
+          <div class="font-bold text-xs uppercase tracking-wide text-purple mb-1">👨‍👩‍👧 Who Leads</div>
+          <p class="text-sm text-navy" id="result-role">...</p>
+        </div>
+        <div class="bg-forest/5 rounded-xl p-3">
+          <div class="font-bold text-xs uppercase tracking-wide text-forest mb-1">🛡️ Safety</div>
+          <p class="text-sm text-navy" id="result-safety">...</p>
+        </div>
+      </div>
+
+      <!-- Accessibility Mods -->
+      <div class="border-t border-gray-100 pt-4">
+        <h4 class="font-bold text-xs uppercase tracking-wide text-soft-gray mb-2">Accessibility</h4>
+        <div class="flex flex-wrap gap-2" id="result-mods">
+          <span class="text-xs bg-ocean/10 text-ocean px-2.5 py-1 rounded-full">🪑 Chair version</span>
+          <span class="text-xs bg-purple/10 text-purple px-2.5 py-1 rounded-full">🤫 Quiet mode</span>
+          <span class="text-xs bg-forest/10 text-forest px-2.5 py-1 rounded-full">🦘 No jumping</span>
+        </div>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="flex flex-wrap gap-3 mt-6 pt-4 border-t border-gray-100">
+        <button type="button" id="shuffle-btn" class="btn-secondary text-sm px-4 py-2">
+          🔀 Shuffle
+        </button>
+        <button type="button" onclick="window.print()" class="btn-secondary text-sm px-4 py-2">
+          🖨️ Print
+        </button>
+        <button type="button" id="done-btn" class="btn-primary text-sm px-4 py-2 ml-auto">
+          ✅ We Did It!
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ workoutCards }}>
+  // Press Play Generator logic
+  const state = { time: 3, space: 'tiny', ages: 'mixed' };
+
+  // Toggle buttons
+  document.querySelectorAll('[data-group]').forEach(group => {
+    const groupName = group.dataset.group;
+    group.querySelectorAll('.pill-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Deselect siblings
+        group.querySelectorAll('.pill-toggle').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-pressed', 'false');
+          // Reset active styling per group
+          if (groupName === 'time') { b.classList.remove('bg-sunshine/40', 'border-sunshine'); }
+          if (groupName === 'space') { b.classList.remove('bg-ocean/40', 'border-ocean'); }
+          if (groupName === 'ages') { b.classList.remove('bg-purple/40', 'border-purple'); }
+        });
+        // Select this one
+        btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
+        if (groupName === 'time') { btn.classList.add('bg-sunshine/40', 'border-sunshine'); }
+        if (groupName === 'space') { btn.classList.add('bg-ocean/40', 'border-ocean'); }
+        if (groupName === 'ages') { btn.classList.add('bg-purple/40', 'border-purple'); }
+
+        state[groupName] = btn.dataset.value;
+      });
+    });
+  });
+
+  const goalIcons = {
+    cardio: '❤️‍🔥', strength: '💪', balance: '⚖️', coordination: '🎯',
+    mobility: '🧘', flexibility: '🤸',
+  };
+
+  function findWorkout() {
+    // Filter by time and space, with age preference
+    let candidates = workoutCards.filter(c =>
+      c.time <= parseInt(state.time) + 2 && c.time >= parseInt(state.time) - 1
+    );
+
+    // Filter by space
+    if (state.space === 'tiny') {
+      candidates = candidates.filter(c => c.space === 'tiny');
+    } else if (state.space === 'outdoor') {
+      candidates = candidates.filter(c => c.space !== 'tiny');
+    }
+
+    // Prefer matching age, but fall back to any
+    const ageMatch = candidates.filter(c => c.ages.includes(state.ages));
+    if (ageMatch.length > 0) candidates = ageMatch;
+
+    if (candidates.length === 0) candidates = workoutCards;
+
+    return candidates[Math.floor(Math.random() * candidates.length)];
+  }
+
+  function renderCard(card) {
+    const result = document.getElementById('workout-result');
+    result.classList.remove('hidden');
+
+    // Re-trigger animation
+    const cardEl = document.getElementById('result-card');
+    cardEl.classList.remove('animate-pop-in');
+    void cardEl.offsetWidth;
+    cardEl.classList.add('animate-pop-in');
+
+    document.getElementById('result-title').textContent = card.title;
+    document.getElementById('result-hook').textContent = `"${card.funHook}"`;
+    document.getElementById('result-time').textContent = `${card.time} min`;
+    document.getElementById('result-space').textContent = card.space;
+    document.getElementById('result-goal').textContent = card.goal;
+    document.getElementById('result-goal-icon').textContent = goalIcons[card.goal] || '🎯';
+    document.getElementById('result-role').textContent = card.familyRole;
+    document.getElementById('result-safety').textContent = card.safetyCue;
+
+    // Steps
+    const stepsEl = document.getElementById('result-steps');
+    stepsEl.innerHTML = card.steps.map((step, i) =>
+      `<li class="flex items-start gap-2 text-sm text-navy">
+        <span class="flex-shrink-0 w-5 h-5 bg-coral/20 text-coral text-xs font-bold rounded-full flex items-center justify-center mt-0.5">${i + 1}</span>
+        <span>${step}</span>
+      </li>`
+    ).join('');
+
+    // Intensity
+    document.getElementById('result-intensity').innerHTML = `
+      <div class="badge-easy rounded-xl px-3 py-2 text-center">
+        <div class="font-bold text-xs mb-0.5">Easy</div>
+        <div class="text-xs opacity-80">${card.intensity.easy}</div>
+      </div>
+      <div class="badge-medium rounded-xl px-3 py-2 text-center">
+        <div class="font-bold text-xs mb-0.5">Medium</div>
+        <div class="text-xs opacity-80">${card.intensity.medium}</div>
+      </div>
+      <div class="badge-spicy rounded-xl px-3 py-2 text-center">
+        <div class="font-bold text-xs mb-0.5">Spicy</div>
+        <div class="text-xs opacity-80">${card.intensity.spicy}</div>
+      </div>
+    `;
+
+    // Mods
+    document.getElementById('result-mods').innerHTML = `
+      <span class="text-xs bg-ocean/10 text-ocean px-2.5 py-1 rounded-full">🪑 ${card.mods.chair}</span>
+      <span class="text-xs bg-purple/10 text-purple px-2.5 py-1 rounded-full">🤫 ${card.mods.quiet}</span>
+      <span class="text-xs bg-forest/10 text-forest px-2.5 py-1 rounded-full">🦘 ${card.mods.noJump}</span>
+    `;
+
+    // Scroll to result
+    result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // Press Play button
+  document.getElementById('press-play-btn').addEventListener('click', () => {
+    renderCard(findWorkout());
+  });
+
+  // Shuffle button
+  document.getElementById('shuffle-btn').addEventListener('click', () => {
+    renderCard(findWorkout());
+  });
+
+  // Done button
+  document.getElementById('done-btn').addEventListener('click', () => {
+    if (typeof window.recordWorkoutComplete === 'function') {
+      window.recordWorkoutComplete();
+    }
+    const btn = document.getElementById('done-btn');
+    btn.textContent = '🎉 Amazing!';
+    btn.classList.add('animate-pulse-success');
+    setTimeout(() => {
+      btn.textContent = '✅ We Did It!';
+      btn.classList.remove('animate-pulse-success');
+    }, 2000);
+  });
+</script>
