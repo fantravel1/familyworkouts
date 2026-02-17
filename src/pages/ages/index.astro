@@ -12,8 +12,8 @@ const breadcrumbs = [
   { name: "By Age", href: "/ages/" }
 ];
 
-const pageTitle = "Family Workouts by Age | Toddlers to Seniors | FamilyWorkouts";
-const pageDescription = "Find the perfect workout for every family member. Age-appropriate exercises from toddlers (1-3) to seniors (60+). Free videos with modifications for all ability levels.";
+const pageTitle = "Mixed-Age Family Workouts | One Game, Every Age | FamilyWorkouts";
+const pageDescription = "Same game, different intensity. Every workout scales from toddlers to seniors with Easy/Medium/Spicy/Chair lanes. Find the perfect fit for your family.";
 ---
 
 <BaseLayout
@@ -29,13 +29,50 @@ const pageDescription = "Find the perfect workout for every family member. Age-a
   <!-- Hero Section -->
   <section class="bg-gradient-to-br from-ocean/10 via-purple/5 to-coral/10 py-12 lg:py-16">
     <div class="section-container">
-      <div class="max-w-3xl">
-        <h1 class="text-3xl lg:text-4xl font-bold text-navy mb-4">
-          Workouts by Age Group
+      <div class="max-w-3xl mx-auto text-center">
+        <div class="inline-flex items-center gap-2 bg-ocean/10 text-ocean font-bold text-sm px-4 py-1.5 rounded-full mb-4">
+          <span>🎯</span> Mixed-Age Scaling
+        </div>
+        <h1 class="text-3xl lg:text-4xl font-extrabold text-navy mb-4">
+          One Game. Every Age. Same Room.
         </h1>
-        <p class="text-lg text-soft-gray mb-4">
-          Every family member deserves exercises designed for their stage of life. Find age-appropriate workouts that everyone can enjoy together.
+        <p class="text-lg text-soft-gray">
+          Every Family Workout Card includes intensity lanes — so a toddler and a teenager and a grandparent can all play the <em>same game</em> at their own level.
         </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Visual -->
+  <section class="py-10 bg-white border-b border-gray-100">
+    <div class="section-container">
+      <div class="max-w-3xl mx-auto">
+        <div class="flex items-center justify-between gap-2 sm:gap-4">
+          <div class="text-center flex-1 bg-forest/5 rounded-2xl p-4">
+            <div class="text-3xl mb-2">👶</div>
+            <div class="text-sm font-bold text-forest mb-1">Easy</div>
+            <div class="text-xs text-soft-gray">Walk like animals</div>
+          </div>
+          <div class="text-soft-gray text-2xl font-light">→</div>
+          <div class="text-center flex-1 bg-sunshine/10 rounded-2xl p-4">
+            <div class="text-3xl mb-2">🧒</div>
+            <div class="text-sm font-bold text-amber-600 mb-1">Medium</div>
+            <div class="text-xs text-soft-gray">Run + add sounds</div>
+          </div>
+          <div class="text-soft-gray text-2xl font-light">→</div>
+          <div class="text-center flex-1 bg-coral/5 rounded-2xl p-4">
+            <div class="text-3xl mb-2">🧑</div>
+            <div class="text-sm font-bold text-coral mb-1">Spicy</div>
+            <div class="text-xs text-soft-gray">Race + burpees!</div>
+          </div>
+          <div class="text-soft-gray text-2xl font-light">→</div>
+          <div class="text-center flex-1 bg-purple/5 rounded-2xl p-4">
+            <div class="text-3xl mb-2">👴</div>
+            <div class="text-sm font-bold text-purple mb-1">Chair</div>
+            <div class="text-xs text-soft-gray">Seated version</div>
+          </div>
+        </div>
+        <p class="text-center text-xs text-soft-gray mt-3 italic">Same game. Different intensity. Everyone plays together.</p>
       </div>
     </div>
   </section>
@@ -43,29 +80,36 @@ const pageDescription = "Find the perfect workout for every family member. Age-a
   <!-- Age Groups Grid -->
   <section class="py-12 lg:py-16">
     <div class="section-container">
+      <h2 class="text-2xl font-extrabold text-navy mb-2 text-center">Find Your Family's Fit</h2>
+      <p class="text-soft-gray text-center mb-8">Select an age group to see workouts designed for that stage of life</p>
+
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {ageGroups.map((age) => (
           <a
             href={`/ages/${age.slug}/`}
-            class="group card p-6 hover:border-ocean border-2 border-transparent transition-all"
+            class="group game-card p-6"
           >
-            <div class="text-5xl mb-4">{age.icon}</div>
-            <h2 class="text-xl font-bold text-navy mb-1 group-hover:text-coral transition-colors">
-              {age.name}
-            </h2>
-            <p class="text-coral font-medium mb-3">{age.ageRange}</p>
+            <div class="flex items-start gap-4 mb-4">
+              <span class="text-5xl group-hover:animate-wiggle">{age.icon}</span>
+              <div>
+                <h2 class="text-xl font-extrabold text-navy group-hover:text-coral transition-colors">
+                  {age.name}
+                </h2>
+                <p class="text-coral font-semibold text-sm">{age.ageRange}</p>
+              </div>
+            </div>
             <p class="text-soft-gray text-sm mb-4">{age.description}</p>
 
-            <div class="bg-ocean/10 rounded-lg p-3 mb-4">
+            <div class="bg-ocean/10 rounded-xl p-3 mb-4">
               <p class="text-xs text-ocean font-medium">
                 Recommended: {age.activityTarget}
               </p>
             </div>
 
-            <div class="flex items-center text-coral font-medium">
-              <span>View Workouts</span>
+            <div class="flex items-center text-coral font-semibold text-sm">
+              <span>View Game-Workouts</span>
               <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </div>
           </a>
@@ -77,33 +121,48 @@ const pageDescription = "Find the perfect workout for every family member. Age-a
   <!-- Tips Section -->
   <section class="py-12 lg:py-16 bg-cloud">
     <div class="section-container">
-      <h2 class="text-2xl font-bold text-navy mb-8 text-center">
-        Tips for Multi-Generational Workouts
+      <h2 class="text-2xl font-extrabold text-navy mb-8 text-center">
+        Making Mixed-Age Work
       </h2>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-        <div class="bg-white p-6 rounded-xl">
-          <div class="text-3xl mb-3">🎯</div>
-          <h3 class="font-bold text-navy mb-2">Start Together</h3>
+        <div class="bg-white p-6 rounded-2xl">
+          <div class="text-3xl mb-3">🎲</div>
+          <h3 class="font-bold text-navy mb-2">Let Kids Lead</h3>
           <p class="text-soft-gray text-sm">
-            Begin with activities everyone can do, then let family members branch off to age-appropriate challenges.
+            Kids pick the game, parents set the safety boundaries. When kids lead, engagement skyrockets.
           </p>
         </div>
-        <div class="bg-white p-6 rounded-xl">
+        <div class="bg-white p-6 rounded-2xl">
           <div class="text-3xl mb-3">⏱️</div>
           <h3 class="font-bold text-navy mb-2">Match the Youngest</h3>
           <p class="text-soft-gray text-sm">
-            Duration should match your youngest participant's attention span. Older family members can always do more later!
+            Duration = youngest participant's attention span. 3 minutes is enough. Older members can always do more.
           </p>
         </div>
-        <div class="bg-white p-6 rounded-xl">
+        <div class="bg-white p-6 rounded-2xl">
           <div class="text-3xl mb-3">🪑</div>
-          <h3 class="font-bold text-navy mb-2">Offer Modifications</h3>
+          <h3 class="font-bold text-navy mb-2">Always Offer Chair Mode</h3>
           <p class="text-soft-gray text-sm">
-            Every workout should have seated options for grandparents and simplified moves for little ones.
+            Every game has a seated version. Grandparents, injuries, and anyone who wants to participate at lower intensity.
           </p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-12 lg:py-16 bg-white">
+    <div class="section-container text-center max-w-2xl mx-auto">
+      <span class="text-4xl block mb-3">⚡</span>
+      <h2 class="text-2xl font-extrabold text-navy mb-2">Don't know your ages? No problem.</h2>
+      <p class="text-soft-gray mb-6">Press Play and choose "Mixed Ages" — we'll pick a game that works for everyone in the room.</p>
+      <a href="/#press-play" class="btn-play inline-flex">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+        Press Play (Mixed Ages)
+      </a>
     </div>
   </section>
 

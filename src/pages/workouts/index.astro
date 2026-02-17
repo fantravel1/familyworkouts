@@ -109,8 +109,8 @@ const breadcrumbs = [
   { name: "Workouts", href: "/workouts/" }
 ];
 
-const pageTitle = "Free Family Workouts | Dance, Yoga, HIIT & More | FamilyWorkouts";
-const pageDescription = "Browse 500+ free family workout videos. Dance parties, yoga, HIIT, sports drills, and cultural exercises for all ages. No equipment needed!";
+const pageTitle = "The Game-Workout Library | Free Family Movement Games | FamilyWorkouts";
+const pageDescription = "Games disguised as fitness. Browse free family game-workouts: dance, yoga, HIIT, cultural movement, and more. Every game has Easy/Medium/Spicy intensity lanes.";
 ---
 
 <BaseLayout
@@ -127,26 +127,29 @@ const pageDescription = "Browse 500+ free family workout videos. Dance parties, 
   <section class="bg-gradient-to-br from-coral/10 via-sunshine/5 to-ocean/10 py-12 lg:py-16">
     <div class="section-container">
       <div class="max-w-3xl">
-        <h1 class="text-3xl lg:text-4xl font-bold text-navy mb-4">
-          All Family Workouts
+        <div class="inline-flex items-center gap-2 text-coral font-bold text-sm mb-3">
+          <span>🎮</span> The Game-Workout Library
+        </div>
+        <h1 class="text-3xl lg:text-4xl font-extrabold text-navy mb-4">
+          Games Disguised as Fitness
         </h1>
         <p class="text-lg text-soft-gray mb-6">
-          500+ free workout videos for the whole family. Filter by category, age group, or difficulty to find the perfect workout.
+          Kids don't want workouts. They want to play. Every game here is fitness in disguise — with Easy, Medium, and Spicy intensity for every age.
         </p>
 
         <!-- Quick Filters -->
         <div class="flex flex-wrap gap-2">
-          <button class="px-4 py-2 bg-coral text-white rounded-full text-sm font-medium">
-            All Workouts
+          <button class="pill-toggle active bg-coral/30 border-coral text-navy">
+            All Games
           </button>
-          <button class="px-4 py-2 bg-white text-navy rounded-full text-sm font-medium hover:bg-gray-100 transition-colors">
+          <button class="pill-toggle bg-forest/10 text-navy hover:bg-forest/20">
             Beginner
           </button>
-          <button class="px-4 py-2 bg-white text-navy rounded-full text-sm font-medium hover:bg-gray-100 transition-colors">
+          <button class="pill-toggle bg-sunshine/10 text-navy hover:bg-sunshine/20">
             Under 15 min
           </button>
-          <button class="px-4 py-2 bg-white text-navy rounded-full text-sm font-medium hover:bg-gray-100 transition-colors">
-            No Equipment
+          <button class="pill-toggle bg-ocean/10 text-navy hover:bg-ocean/20">
+            Tiny Space
           </button>
         </div>
       </div>
@@ -154,16 +157,17 @@ const pageDescription = "Browse 500+ free family workout videos. Dance parties, 
   </section>
 
   <!-- Categories Quick Access -->
-  <section class="py-8 bg-white border-b border-gray-100">
+  <section class="py-6 bg-white border-b border-gray-100">
     <div class="section-container">
-      <div class="flex gap-4 overflow-x-auto pb-2 hide-scrollbar">
+      <div class="flex gap-3 overflow-x-auto pb-2 hide-scrollbar">
         {categories.map((cat) => (
           <a
             href={`/workouts/${cat.slug}/`}
-            class="flex items-center gap-2 px-4 py-2 bg-gray-50 rounded-full text-sm font-medium text-navy hover:bg-gray-100 transition-colors whitespace-nowrap"
+            class="flex items-center gap-2 px-4 py-2.5 bg-gray-50 rounded-full text-sm font-semibold text-navy hover:bg-coral/10 hover:text-coral transition-colors whitespace-nowrap"
           >
             <span>{cat.icon}</span>
             <span>{cat.name}</span>
+            <span class="text-xs text-soft-gray">({cat.workoutCount})</span>
           </a>
         ))}
       </div>
@@ -173,6 +177,19 @@ const pageDescription = "Browse 500+ free family workout videos. Dance parties, 
   <!-- Workouts Grid -->
   <section class="py-12 lg:py-16">
     <div class="section-container">
+      <div class="flex items-center justify-between mb-6">
+        <p class="text-soft-gray text-sm">{allWorkouts.length} game-workouts</p>
+        <div class="flex items-center gap-2 text-sm text-soft-gray">
+          <span>Sort:</span>
+          <select class="bg-white border border-gray-200 rounded-lg px-3 py-1.5 text-navy text-sm font-medium">
+            <option>Most Popular</option>
+            <option>Newest</option>
+            <option>Shortest First</option>
+            <option>Longest First</option>
+          </select>
+        </div>
+      </div>
+
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {allWorkouts.map((workout) => (
           <WorkoutCard {...workout} />
@@ -182,21 +199,39 @@ const pageDescription = "Browse 500+ free family workout videos. Dance parties, 
       <!-- Load More -->
       <div class="text-center mt-12">
         <button class="btn-secondary">
-          Load More Workouts
+          Load More Games
         </button>
       </div>
     </div>
   </section>
 
-  <!-- Categories Section -->
+  <!-- Browse by Category -->
   <section class="py-12 lg:py-16 bg-cloud">
     <div class="section-container">
-      <h2 class="text-2xl font-bold text-navy mb-8">Browse by Category</h2>
+      <div class="text-center mb-8">
+        <h2 class="text-2xl font-extrabold text-navy mb-2">Browse by Category</h2>
+        <p class="text-soft-gray">Find the perfect game-workout type for your family</p>
+      </div>
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {categories.map((category) => (
           <CategoryCard {...category} />
         ))}
       </div>
+    </div>
+  </section>
+
+  <!-- Press Play CTA -->
+  <section class="py-12 lg:py-16 bg-white">
+    <div class="section-container text-center max-w-2xl mx-auto">
+      <span class="text-4xl block mb-3">⚡</span>
+      <h2 class="text-2xl font-extrabold text-navy mb-2">Can't decide?</h2>
+      <p class="text-soft-gray mb-6">Let the Press Play Generator pick the perfect game for you. Choose your time, space, and ages — done.</p>
+      <a href="/#press-play" class="btn-play inline-flex">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+        Press Play
+      </a>
     </div>
   </section>
 

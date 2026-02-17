@@ -7,74 +7,86 @@ import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 
 const breadcrumbs = [
   { name: "Home", href: "/" },
-  { name: "Challenges", href: "/challenges/" }
+  { name: "Community Missions", href: "/challenges/" }
 ];
 
-const challenges = [
+const missions = [
   {
-    title: "7-Day Family Fitness Kickstart",
-    description: "Get your family moving with this beginner-friendly week of workouts. Perfect for families just starting out!",
+    title: "Walk to Tokyo",
+    description: "Collect family movement minutes to virtually travel to Tokyo! Every minute = 1 mile. Families worldwide are walking together.",
+    slug: "walk-to-tokyo",
+    duration: 30,
+    difficulty: "beginner",
+    icon: "🗼",
+    badge: "Active Now",
+    participants: "12,847 families",
+    progress: 5
+  },
+  {
+    title: "7-Day Family Kickstart",
+    description: "New to family fitness? Start here. 7 days of 3-minute games. By day 7, moving together will be a habit.",
     slug: "7-day-kickstart",
     duration: 7,
     difficulty: "beginner",
     icon: "🚀",
-    badge: "Most Popular"
+    badge: "Best for Beginners",
+    participants: "23,419 families",
+    progress: 0
   },
   {
-    title: "30-Day Dance Challenge",
-    description: "Learn dance moves from around the world! One new style every day for a month.",
-    slug: "30-day-dance",
-    duration: 30,
-    difficulty: "intermediate",
-    icon: "💃",
-    badge: null
-  },
-  {
-    title: "World Culture Movement Tour",
-    description: "Explore traditional exercises from every continent. Japan's Radio Taiso, Brazil's Capoeira, and more!",
-    slug: "world-culture-tour",
+    title: "Dance Around the World",
+    description: "Learn a dance from a different country every day. Brazil, India, Japan, Ireland, and more!",
+    slug: "dance-around-world",
     duration: 14,
     difficulty: "beginner",
-    icon: "🌍",
-    badge: "New"
+    icon: "💃",
+    badge: "Most Popular",
+    participants: "18,291 families",
+    progress: 0
   },
   {
-    title: "Summer Shape-Up Challenge",
-    description: "30 days of progressive family workouts to get everyone feeling great this summer.",
-    slug: "summer-shape-up",
+    title: "Screen Time Swap",
+    description: "Replace 15 minutes of daily screen time with active family play. Track your swap streak!",
+    slug: "screen-time-swap",
+    duration: 21,
+    difficulty: "beginner",
+    icon: "📵",
+    badge: null,
+    participants: "9,512 families",
+    progress: 0
+  },
+  {
+    title: "Summer Adventure Challenge",
+    description: "30 outdoor + indoor family activities for summer. Rain or shine, your family moves.",
+    slug: "summer-adventure",
     duration: 30,
     difficulty: "intermediate",
     icon: "☀️",
-    badge: "Seasonal"
-  },
-  {
-    title: "No-Screen Week Challenge",
-    description: "Replace screen time with active play! A week of fun alternatives to devices.",
-    slug: "no-screen-week",
-    duration: 7,
-    difficulty: "beginner",
-    icon: "📵",
-    badge: null
+    badge: "Seasonal",
+    participants: "6,733 families",
+    progress: 0
   },
   {
     title: "Family Yoga Journey",
-    description: "A 21-day introduction to family yoga. Learn poses, breathing, and mindfulness together.",
+    description: "21 days to build a family yoga practice. Starts with 3-minute sessions, builds to 12.",
     slug: "family-yoga-journey",
     duration: 21,
     difficulty: "beginner",
     icon: "🧘",
-    badge: null
+    badge: null,
+    participants: "11,204 families",
+    progress: 0
   }
 ];
 
 const difficultyColors: Record<string, string> = {
-  beginner: "bg-forest/20 text-forest",
-  intermediate: "bg-sunshine/30 text-amber-700",
-  advanced: "bg-coral/20 text-coral"
+  beginner: "badge-easy",
+  intermediate: "badge-medium",
+  advanced: "badge-spicy"
 };
 
-const pageTitle = "Family Fitness Challenges | Multi-Day Workout Programs | FamilyWorkouts";
-const pageDescription = "Join family fitness challenges! 7-day kickstarts, 30-day programs, and seasonal challenges designed for families to complete together.";
+const pageTitle = "Community Missions | Family Fitness Challenges | FamilyWorkouts";
+const pageDescription = "Join thousands of families on cooperative missions! Walk to Tokyo, Dance Around the World, and more. Not competitive — cooperative. Free.";
 ---
 
 <BaseLayout
@@ -88,64 +100,68 @@ const pageDescription = "Join family fitness challenges! 7-day kickstarts, 30-da
   </div>
 
   <!-- Hero Section -->
-  <section class="bg-gradient-to-br from-coral/10 via-purple/10 to-sunshine/10 py-12 lg:py-16">
+  <section class="bg-gradient-to-br from-purple/10 via-coral/5 to-ocean/10 py-12 lg:py-16">
     <div class="section-container">
       <div class="max-w-3xl">
-        <h1 class="text-3xl lg:text-4xl font-bold text-navy mb-4">
-          Family Fitness Challenges
+        <div class="inline-flex items-center gap-2 bg-purple/10 text-purple font-bold text-sm px-4 py-1.5 rounded-full mb-4">
+          <span>🌍</span> Community Missions
+        </div>
+        <h1 class="text-3xl lg:text-4xl font-extrabold text-navy mb-4">
+          Move Together. Globally.
         </h1>
         <p class="text-lg text-soft-gray mb-4">
-          Multi-day programs designed to build healthy habits together. Pick a challenge and commit as a family!
+          Cooperative family missions — not competitive. Thousands of families worldwide working toward the same goal. Pick a mission and start contributing minutes.
         </p>
-        <div class="flex items-center gap-4 text-sm">
-          <div class="flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-forest"></span>
-            <span>Beginner</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-sunshine"></span>
-            <span>Intermediate</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <span class="w-3 h-3 rounded-full bg-coral"></span>
-            <span>Advanced</span>
+        <div class="flex flex-wrap items-center gap-4">
+          <div class="inline-flex items-center gap-2 bg-white/80 px-4 py-2 rounded-full text-sm">
+            <span class="w-2 h-2 bg-forest rounded-full animate-pulse"></span>
+            <span class="font-semibold text-navy">71,000+ families participating</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Challenges Grid -->
+  <!-- Missions Grid -->
   <section class="py-12 lg:py-16">
     <div class="section-container">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {challenges.map((challenge) => (
+        {missions.map((mission) => (
           <a
-            href={`/challenges/${challenge.slug}/`}
-            class="card overflow-hidden group"
+            href={`/challenges/${mission.slug}/`}
+            class="game-card overflow-hidden group"
           >
-            {challenge.badge && (
-              <div class="bg-gradient-sunrise text-navy text-xs font-bold px-3 py-1">
-                {challenge.badge}
+            {mission.badge && (
+              <div class="bg-gradient-sunrise text-navy text-xs font-bold px-4 py-1.5 flex items-center gap-1">
+                {mission.badge === 'Active Now' && <span class="w-1.5 h-1.5 bg-forest rounded-full animate-pulse"></span>}
+                {mission.badge}
               </div>
             )}
             <div class="p-6">
-              <div class="text-4xl mb-4">{challenge.icon}</div>
-              <h2 class="font-bold text-lg text-navy mb-2 group-hover:text-coral transition-colors">
-                {challenge.title}
+              <div class="flex items-start justify-between mb-4">
+                <span class="text-4xl">{mission.icon}</span>
+                <div class="text-right">
+                  <span class="bg-coral/10 text-coral font-bold text-xs px-2.5 py-1 rounded-full">
+                    {mission.duration} days
+                  </span>
+                </div>
+              </div>
+              <h2 class="font-extrabold text-lg text-navy mb-2 group-hover:text-coral transition-colors">
+                {mission.title}
               </h2>
               <p class="text-soft-gray text-sm mb-4">
-                {challenge.description}
+                {mission.description}
               </p>
-              <div class="flex items-center gap-3">
-                <span class="text-sm font-medium text-navy">
-                  {challenge.duration} days
-                </span>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2 text-xs text-soft-gray">
+                  <span>🌍</span>
+                  <span>{mission.participants}</span>
+                </div>
                 <span class:list={[
-                  "text-xs px-2 py-1 rounded-full capitalize",
-                  difficultyColors[challenge.difficulty]
+                  "text-xs px-2.5 py-1 rounded-full capitalize font-semibold",
+                  difficultyColors[mission.difficulty]
                 ]}>
-                  {challenge.difficulty}
+                  {mission.difficulty}
                 </span>
               </div>
             </div>
@@ -158,23 +174,27 @@ const pageDescription = "Join family fitness challenges! 7-day kickstarts, 30-da
   <!-- How It Works -->
   <section class="py-12 lg:py-16 bg-cloud">
     <div class="section-container">
-      <h2 class="text-2xl font-bold text-navy mb-8 text-center">How Challenges Work</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-        <div class="text-center">
-          <div class="w-12 h-12 bg-coral text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">1</div>
-          <h3 class="font-bold text-navy mb-2">Pick a Challenge</h3>
-          <p class="text-soft-gray text-sm">Choose a challenge that fits your family's schedule and fitness level.</p>
-        </div>
-        <div class="text-center">
-          <div class="w-12 h-12 bg-coral text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">2</div>
-          <h3 class="font-bold text-navy mb-2">Follow Along Daily</h3>
-          <p class="text-soft-gray text-sm">Complete each day's workout together. Rest days are built in!</p>
-        </div>
-        <div class="text-center">
-          <div class="w-12 h-12 bg-coral text-white rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">3</div>
-          <h3 class="font-bold text-navy mb-2">Celebrate Together</h3>
-          <p class="text-soft-gray text-sm">Finish the challenge and earn your family badge!</p>
-        </div>
+      <h2 class="text-2xl font-extrabold text-navy mb-8 text-center">How Missions Work</h2>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+        {[
+          { step: "1", icon: "🎯", title: "Pick a Mission", desc: "Choose one that excites your family" },
+          { step: "2", icon: "▶️", title: "Move Daily", desc: "Complete game-workouts at your pace" },
+          { step: "3", icon: "📊", title: "Track Progress", desc: "Your minutes add to the global total" },
+          { step: "4", icon: "🎉", title: "Celebrate", desc: "Hit milestones with families worldwide" },
+        ].map((item) => (
+          <div class="text-center">
+            <div class="w-14 h-14 bg-gradient-sunrise text-navy rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl">
+              {item.icon}
+            </div>
+            <h3 class="font-bold text-navy mb-1">{item.title}</h3>
+            <p class="text-soft-gray text-xs">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="text-center mt-8 bg-white rounded-2xl p-6 max-w-lg mx-auto">
+        <p class="text-sm text-navy font-semibold mb-1">These are cooperative, not competitive.</p>
+        <p class="text-xs text-soft-gray">Every family's minutes count toward the global goal. No leaderboards. No shame. Just collective movement.</p>
       </div>
     </div>
   </section>
