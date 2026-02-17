@@ -1,0 +1,72 @@
+---
+/**
+ * New Parent Corner — postpartum safe, stroller workouts, nap-time moves.
+ * Tone: supportive, realistic, time-respecting, non-shaming.
+ */
+
+const cards = [
+  {
+    title: "Postpartum Safe Starter",
+    description: "Gentle, pelvic-floor-friendly movement for the first months. Always consult your healthcare provider first.",
+    emoji: "🤱",
+    time: "5 min",
+    href: "/workouts/adaptive/",
+    color: "bg-purple/10 border-purple/20 hover:border-purple/40",
+    tag: "Gentle"
+  },
+  {
+    title: "Stroller Workout",
+    description: "Turn your daily walk into a full-body workout. Baby rides, you move — everyone wins.",
+    emoji: "🚼",
+    time: "12 min",
+    href: "/workouts/outdoor/",
+    color: "bg-ocean/10 border-ocean/20 hover:border-ocean/40",
+    tag: "Outdoor"
+  },
+  {
+    title: "Nap-Time Micro-Moves",
+    description: "3-minute movement bursts while baby sleeps. No equipment. No noise. Maximum impact.",
+    emoji: "😴",
+    time: "3 min",
+    href: "/workouts/hiit/",
+    color: "bg-sunshine/10 border-sunshine/20 hover:border-sunshine/40",
+    tag: "Quiet"
+  },
+];
+---
+
+<section>
+  <div class="flex items-center gap-3 mb-6">
+    <span class="text-3xl">👶</span>
+    <div>
+      <h2 class="text-xl lg:text-2xl font-extrabold text-navy">New Parent Corner</h2>
+      <p class="text-soft-gray text-sm">Movement that respects your reality. No pressure. No perfection.</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+    {cards.map((card) => (
+      <a
+        href={card.href}
+        class:list={[
+          "block p-5 rounded-2xl border-2 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg",
+          card.color
+        ]}
+      >
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-3xl">{card.emoji}</span>
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-semibold bg-white/80 text-navy px-2 py-0.5 rounded-full">{card.tag}</span>
+            <span class="text-xs font-semibold bg-white/80 text-navy px-2 py-0.5 rounded-full">{card.time}</span>
+          </div>
+        </div>
+        <h3 class="font-bold text-navy mb-1">{card.title}</h3>
+        <p class="text-soft-gray text-xs leading-relaxed">{card.description}</p>
+      </a>
+    ))}
+  </div>
+
+  <p class="mt-4 text-xs text-soft-gray italic">
+    Always consult a healthcare professional before starting postpartum exercise. These are general movement suggestions, not medical advice.
+  </p>
+</section>

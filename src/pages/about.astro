@@ -10,8 +10,27 @@ const breadcrumbs = [
   { name: "About", href: "/about/" }
 ];
 
-const pageTitle = "About FamilyWorkouts | Free Family Fitness Platform";
-const pageDescription = "FamilyWorkouts.com is the world's free family fitness platform. Our mission: make family fitness accessible to every family on Earth.";
+const pillars = [
+  { icon: "⚡", title: "Press Play Generator", description: "Choose time, space, ages — get an instant workout card. No planning. No scrolling. No login." },
+  { icon: "🎮", title: "Game-Workout Library", description: "Games disguised as fitness. Kids don't want workouts — they want to play. We built that." },
+  { icon: "👶", title: "New Parent Corner", description: "Postpartum-safe, stroller workouts, nap-time micro-moves. Movement that respects your reality." },
+  { icon: "🏠", title: "Tiny-Space / No-Equipment", description: "Every workout works in a small apartment with no gear. Because real families don't have home gyms." },
+  { icon: "👨‍👩‍👧‍👦", title: "Mixed-Age Scaling", description: "Every card has Easy / Medium / Spicy / Chair lanes so a 3-year-old and a 70-year-old play the same game." },
+  { icon: "🌍", title: "Community Missions", description: "Walk to Tokyo. Dance Around the World. Cooperative, not competitive. Families worldwide, moving together." },
+  { icon: "📚", title: "Learn Hub", description: "Short, jargon-free guides. Why movement matters, age-specific tips, building habits that stick." },
+];
+
+const nonNegotiables = [
+  "Every workout free. Forever. No paywall. No freemium bait.",
+  "Every card includes accessibility: chair version, quiet mode, no-jump option.",
+  "No body shaming. No parenting shaming. No guilt language.",
+  "Phone-first. Designed for the 80% who access fitness on a phone.",
+  "Inclusive — 7 languages, RTL support, global cultural movement traditions.",
+  "Safety cues on every card. Kids' safety always comes first.",
+];
+
+const pageTitle = "About FamilyWorkouts | The World's Free Family Movement Platform";
+const pageDescription = "FamilyWorkouts.com is a movement operating system for families. Not a fitness program. A global, free, joyful platform where families move together.";
 ---
 
 <BaseLayout
@@ -28,107 +47,134 @@ const pageDescription = "FamilyWorkouts.com is the world's free family fitness p
   <section class="bg-gradient-to-br from-coral/10 via-sunshine/5 to-ocean/10 py-16 lg:py-24">
     <div class="section-container">
       <div class="max-w-3xl mx-auto text-center">
-        <h1 class="text-3xl lg:text-5xl font-bold text-navy mb-6">
-          Our Mission: Free Family Fitness for All
+        <div class="inline-flex items-center gap-2 bg-white/80 text-navy font-bold text-xs px-4 py-1.5 rounded-full mb-6 uppercase tracking-wide">
+          <span class="w-2 h-2 bg-coral rounded-full"></span>
+          Our Mission
+        </div>
+        <h1 class="text-3xl lg:text-5xl font-extrabold text-navy mb-6 leading-tight">
+          The World's Most Accessible, Joyful, Free Family Fitness Platform
         </h1>
-        <p class="text-xl text-soft-gray">
-          We believe every family deserves access to quality fitness content—regardless of income, location, or language.
+        <p class="text-xl text-soft-gray max-w-2xl mx-auto">
+          Not a fitness program. Not a subscription. A <strong class="text-navy">movement operating system</strong> for families — like Duolingo for family fitness.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- Story Section -->
-  <section class="py-16 lg:py-20">
+  <!-- The Problem We Solve -->
+  <section class="py-16 lg:py-20 bg-white">
     <div class="section-container">
       <div class="max-w-3xl mx-auto">
-        <h2 class="text-2xl font-bold text-navy mb-6">Why We Exist</h2>
-        <div class="prose prose-lg">
-          <p class="text-soft-gray mb-4">
-            <strong class="text-navy">390 million children</strong> worldwide are overweight. <strong class="text-navy">87% of kids</strong> exceed recommended screen time limits. Yet quality family fitness content remains locked behind expensive subscriptions and equipment costs.
+        <h2 class="text-2xl font-extrabold text-navy mb-6">The Problem</h2>
+        <div class="space-y-4 text-soft-gray text-lg">
+          <p>
+            <strong class="text-navy">390 million children</strong> worldwide are overweight. <strong class="text-navy">87% of kids</strong> exceed recommended screen time. Yet quality family fitness content sits behind paywalls, requires expensive equipment, or assumes a home gym.
           </p>
-          <p class="text-soft-gray mb-4">
-            FamilyWorkouts.com changes that. We're building the world's most comprehensive library of free family workout videos—designed for every age, every ability, and available in 7+ languages.
-          </p>
-          <p class="text-soft-gray mb-4">
-            From Japan's Radio Taiso (practiced by 27 million people) to Brazil's Capoeira, from Indian yoga traditions to African dance rhythms—we celebrate the rich diversity of how families around the world stay active together.
+          <p>
+            Parents are exhausted. They don't need a 45-minute program. They need <strong class="text-navy">3 minutes that actually work</strong> — something fun they can do right now, in a small apartment, with a toddler on their leg and a teenager rolling their eyes.
           </p>
         </div>
 
-        <h2 class="text-2xl font-bold text-navy mt-12 mb-6">Our Values</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="bg-white p-6 rounded-xl border border-gray-100">
-            <div class="text-3xl mb-3">💯</div>
-            <h3 class="font-bold text-navy mb-2">100% Free, Forever</h3>
-            <p class="text-soft-gray text-sm">
-              No paywalls, no subscriptions, no hidden costs. Every family deserves access to fitness.
-            </p>
-          </div>
-          <div class="bg-white p-6 rounded-xl border border-gray-100">
-            <div class="text-3xl mb-3">👨‍👩‍👧‍👦</div>
-            <h3 class="font-bold text-navy mb-2">True Multi-Generational</h3>
-            <p class="text-soft-gray text-sm">
-              Workouts designed for toddlers through grandparents to exercise together.
-            </p>
-          </div>
-          <div class="bg-white p-6 rounded-xl border border-gray-100">
-            <div class="text-3xl mb-3">📱</div>
-            <h3 class="font-bold text-navy mb-2">Mobile-First</h3>
-            <p class="text-soft-gray text-sm">
-              Designed for the 80% of families who access fitness via smartphone.
-            </p>
-          </div>
-          <div class="bg-white p-6 rounded-xl border border-gray-100">
-            <div class="text-3xl mb-3">🌍</div>
-            <h3 class="font-bold text-navy mb-2">Globally Inclusive</h3>
-            <p class="text-soft-gray text-sm">
-              Content in 7+ languages, celebrating fitness traditions from every continent.
-            </p>
-          </div>
-        </div>
+        <h2 class="text-2xl font-extrabold text-navy mt-14 mb-2">Our Answer</h2>
+        <p class="text-soft-gray text-lg mb-8">
+          FamilyWorkouts.com solves decision fatigue with the <strong class="text-navy">Family Workout Card</strong> — a bite-sized, printable, all-ages game-workout. Pick your time, space, and ages. Press Play. Move together. That's it.
+        </p>
 
-        <h2 class="text-2xl font-bold text-navy mt-12 mb-6">Our Commitment</h2>
-        <ul class="space-y-3 text-soft-gray">
-          <li class="flex items-start gap-3">
-            <svg class="w-6 h-6 text-forest flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            <span>No equipment required for any workout</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <svg class="w-6 h-6 text-forest flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            <span>Every workout includes modifications for different abilities</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <svg class="w-6 h-6 text-forest flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            <span>Privacy-first: no tracking, no data selling</span>
-          </li>
-          <li class="flex items-start gap-3">
-            <svg class="w-6 h-6 text-forest flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-            <span>Open source and community-driven</span>
-          </li>
+        <!-- Culture Quote -->
+        <div class="bg-gradient-to-br from-sunshine/15 via-coral/5 to-ocean/10 rounded-3xl p-8 text-center mb-8">
+          <blockquote class="text-2xl lg:text-3xl font-extrabold text-gradient mb-4">
+            "Show up. Laugh. Repeat."
+          </blockquote>
+          <p class="text-soft-gray">Our mantra. Not perfection. Not performance. Just showing up and moving together.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 Pillars -->
+  <section class="py-16 lg:py-20 bg-cloud">
+    <div class="section-container">
+      <div class="text-center mb-10">
+        <h2 class="text-2xl lg:text-3xl font-extrabold text-navy mb-2">The 7 Pillars</h2>
+        <p class="text-soft-gray max-w-xl mx-auto">Everything we build serves one of these seven pillars</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-5xl mx-auto">
+        {pillars.map((pillar) => (
+          <div class="bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+            <div class="text-3xl mb-3">{pillar.icon}</div>
+            <h3 class="font-bold text-navy mb-2">{pillar.title}</h3>
+            <p class="text-soft-gray text-sm">{pillar.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Non-Negotiables -->
+  <section class="py-16 lg:py-20 bg-white">
+    <div class="section-container">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="text-2xl font-extrabold text-navy mb-6">Non-Negotiables</h2>
+        <ul class="space-y-3">
+          {nonNegotiables.map((item) => (
+            <li class="flex items-start gap-3">
+              <svg class="w-6 h-6 text-forest flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              <span class="text-navy">{item}</span>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
   </section>
 
+  <!-- Brand Voice -->
+  <section class="py-16 lg:py-20 bg-gradient-to-br from-purple/5 via-coral/5 to-ocean/5">
+    <div class="section-container">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-2xl font-extrabold text-navy mb-6">Our Voice</h2>
+        <p class="text-soft-gray text-lg mb-8">
+          We sound like a joyful coach and a calm parent friend. Never preachy. Never shaming. Always celebrating the tiny wins.
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left max-w-xl mx-auto">
+          <div class="bg-white p-4 rounded-xl">
+            <div class="font-bold text-forest text-xs uppercase mb-2">We say</div>
+            <p class="text-navy text-sm">"3 minutes is enough."</p>
+            <p class="text-navy text-sm">"Your family did amazing!"</p>
+            <p class="text-navy text-sm">"Laughing counts as a rep."</p>
+          </div>
+          <div class="bg-white p-4 rounded-xl">
+            <div class="font-bold text-coral text-xs uppercase mb-2">We never say</div>
+            <p class="text-soft-gray text-sm">"No excuses."</p>
+            <p class="text-soft-gray text-sm">"Burn those calories."</p>
+            <p class="text-soft-gray text-sm">"You should be doing more."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- CTA Section -->
-  <section class="py-16 bg-navy text-white">
-    <div class="section-container text-center">
-      <h2 class="text-2xl lg:text-3xl font-bold mb-4">
-        Ready to Get Moving?
+  <section class="py-16 lg:py-20 bg-navy text-white relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute top-10 left-10 w-32 h-32 bg-coral/10 rounded-full blur-3xl"></div>
+      <div class="absolute bottom-10 right-10 w-48 h-48 bg-ocean/10 rounded-full blur-3xl"></div>
+    </div>
+    <div class="section-container text-center relative z-10">
+      <span class="text-4xl block mb-4">❤️</span>
+      <h2 class="text-2xl lg:text-3xl font-extrabold mb-3">
+        Ready to Move Together?
       </h2>
       <p class="text-gray-300 mb-8 max-w-xl mx-auto">
-        Join families around the world who are building healthier habits together.
+        No account needed. No credit card. Just press play and start moving with your family.
       </p>
-      <a href="/workouts/" class="btn-primary">
-        Start Your First Workout
+      <a href="/#press-play" class="btn-play text-lg inline-flex">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+        Press Play Now
       </a>
     </div>
   </section>

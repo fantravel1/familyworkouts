@@ -69,12 +69,15 @@ const isActive = (href: string) => currentPath.startsWith(href);
           <LanguageSwitcher lang={lang} />
         </div>
 
-        <!-- CTA Button (Desktop) -->
+        <!-- Press Play CTA (Desktop) -->
         <a
-          href="/workouts/"
-          class="hidden md:inline-flex btn-primary text-sm"
+          href="/#press-play"
+          class="hidden md:inline-flex items-center gap-2 bg-gradient-to-r from-coral to-coral/90 text-white font-semibold text-sm px-4 py-2.5 rounded-xl shadow-md shadow-coral/20 hover:shadow-lg hover:shadow-coral/30 hover:-translate-y-0.5 transition-all"
         >
-          Start Workout
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+          Press Play
         </a>
       </div>
     </div>

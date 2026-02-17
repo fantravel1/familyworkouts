@@ -7,56 +7,68 @@ import BreadcrumbSchema from '../../components/seo/BreadcrumbSchema.astro';
 
 const breadcrumbs = [
   { name: "Home", href: "/" },
-  { name: "Guides", href: "/guides/" }
+  { name: "Learn", href: "/guides/" }
 ];
 
 const guides = [
   {
-    title: "Getting Started with Family Workouts",
-    description: "Everything you need to know to start exercising as a family. Tips for all ages and abilities.",
+    title: "Your Family's First 3 Minutes",
+    description: "How to start a family movement habit that actually sticks. Spoiler: it takes less time than you think.",
     slug: "getting-started",
     icon: "🚀",
-    readTime: 8
+    readTime: 4,
+    tag: "Start Here",
+    color: "border-coral/20 bg-coral/5"
   },
   {
-    title: "How to Make Exercise Fun for Kids",
-    description: "Turn fitness into play! Strategies for engaging children of all ages in physical activity.",
+    title: "Why Games Beat Workouts (for Kids)",
+    description: "The science behind why kids will do 30 jumping jacks in a game but refuse 5 in a workout. Use this.",
     slug: "exercise-fun-for-kids",
     icon: "🎮",
-    readTime: 6
+    readTime: 5,
+    tag: "Key Insight",
+    color: "border-ocean/20 bg-ocean/5"
   },
   {
-    title: "Multi-Generational Workouts Guide",
-    description: "How to create workout sessions that work for toddlers, teens, parents, and grandparents.",
+    title: "Mixed-Age Scaling: The How-To",
+    description: "How to run one game where a 3-year-old, a 13-year-old, and a 70-year-old all play at their level.",
     slug: "multi-generational-workouts",
     icon: "👨‍👩‍👧‍👦",
-    readTime: 10
+    readTime: 6,
+    tag: null,
+    color: "border-purple/20 bg-purple/5"
   },
   {
-    title: "No-Equipment Home Workouts",
-    description: "Effective exercises using just your body weight. Perfect for any space, any budget.",
+    title: "Tiny Space, Big Movement",
+    description: "No yard? No problem. How to get a full family workout in a small apartment with zero equipment.",
     slug: "no-equipment-workouts",
     icon: "🏠",
-    readTime: 7
+    readTime: 4,
+    tag: null,
+    color: "border-sunshine/20 bg-sunshine/5"
   },
   {
-    title: "Creating a Family Fitness Routine",
-    description: "Build sustainable habits with a weekly family workout schedule that actually sticks.",
+    title: "Building a 3-Minute Daily Habit",
+    description: "Forget 30-day challenges. Here's how to make 3 minutes of family movement as automatic as brushing teeth.",
     slug: "family-fitness-routine",
-    icon: "📅",
-    readTime: 9
+    icon: "⏱️",
+    readTime: 5,
+    tag: "Popular",
+    color: "border-forest/20 bg-forest/5"
   },
   {
-    title: "Adaptive Exercises for All Abilities",
-    description: "Inclusive workout modifications for family members with different physical abilities.",
+    title: "Adaptive Movement for Every Body",
+    description: "Chair versions, quiet mode, no-jump options. How to include every family member, every time.",
     slug: "adaptive-exercises",
     icon: "♿",
-    readTime: 8
+    readTime: 5,
+    tag: null,
+    color: "border-ocean/20 bg-ocean/5"
   }
 ];
 
-const pageTitle = "Family Fitness Guides | How to Exercise Together | FamilyWorkouts";
-const pageDescription = "Expert guides on family fitness. Learn how to exercise with kids, create workout routines, and make fitness fun for the whole family.";
+const pageTitle = "Learn Hub | Short Family Fitness Guides | FamilyWorkouts";
+const pageDescription = "Short, jargon-free guides for family fitness. How to start, why games beat workouts, mixed-age scaling, and building daily habits. 4-6 minute reads.";
 ---
 
 <BaseLayout
@@ -73,11 +85,14 @@ const pageDescription = "Expert guides on family fitness. Learn how to exercise 
   <section class="bg-gradient-to-br from-purple/10 via-ocean/5 to-coral/10 py-12 lg:py-16">
     <div class="section-container">
       <div class="max-w-3xl">
-        <h1 class="text-3xl lg:text-4xl font-bold text-navy mb-4">
-          Family Fitness Guides
+        <div class="inline-flex items-center gap-2 text-purple font-bold text-sm mb-3">
+          <span>📚</span> Learn Hub
+        </div>
+        <h1 class="text-3xl lg:text-4xl font-extrabold text-navy mb-4">
+          Short Reads, Big Impact
         </h1>
         <p class="text-lg text-soft-gray">
-          Expert advice on getting your family moving together. From first steps to advanced routines, we've got you covered.
+          No jargon. No guilt. Just practical, parent-friendly guides to help your family move more — starting with 3 minutes.
         </p>
       </div>
     </div>
@@ -90,23 +105,47 @@ const pageDescription = "Expert guides on family fitness. Learn how to exercise 
         {guides.map((guide) => (
           <a
             href={`/guides/${guide.slug}/`}
-            class="card p-6 group"
+            class:list={[
+              "game-card p-6 group border-2",
+              guide.color
+            ]}
           >
-            <div class="text-4xl mb-4">{guide.icon}</div>
-            <h2 class="font-bold text-lg text-navy mb-2 group-hover:text-coral transition-colors">
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-4xl group-hover:animate-wiggle">{guide.icon}</span>
+              <div class="flex items-center gap-2">
+                {guide.tag && (
+                  <span class="text-xs font-bold bg-white/80 text-navy px-2.5 py-1 rounded-full">{guide.tag}</span>
+                )}
+                <span class="text-xs font-medium bg-white/80 text-soft-gray px-2.5 py-1 rounded-full">{guide.readTime} min</span>
+              </div>
+            </div>
+            <h2 class="font-extrabold text-lg text-navy mb-2 group-hover:text-coral transition-colors">
               {guide.title}
             </h2>
-            <p class="text-soft-gray text-sm mb-4">
+            <p class="text-soft-gray text-sm">
               {guide.description}
             </p>
-            <div class="flex items-center text-sm text-soft-gray">
-              <svg class="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              {guide.readTime} min read
-            </div>
           </a>
         ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick tip -->
+  <section class="py-12 lg:py-16 bg-cloud">
+    <div class="section-container text-center max-w-2xl mx-auto">
+      <div class="bg-white rounded-3xl p-8 shadow-sm">
+        <span class="text-4xl block mb-3">💡</span>
+        <h2 class="text-xl font-extrabold text-navy mb-3">The #1 Tip</h2>
+        <p class="text-soft-gray text-lg mb-4">
+          Don't wait for the "right time" to start. <strong class="text-navy">3 minutes today is better than 30 minutes someday.</strong>
+        </p>
+        <a href="/#press-play" class="btn-play inline-flex">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+          Start Now (3 min)
+        </a>
       </div>
     </div>
   </section>
